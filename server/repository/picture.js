@@ -1,23 +1,22 @@
-const seedPicture = require("../models/seedPicture");
 const picture = require("../models/picture");
 const { Op } = require('sequelize')
 
 
 class Picture {
-    async seedPictures(id) {
-        console.log(id)
+    async seedPictures(seedId) {
+        console.log(seedId)
         return await picture.findAll({
             where: {
-                id: id,
+                seedId: seedId,
             },
         });
     }
 
-    async seedPicture(id) {
-        console.log(id)
+    async seedOnePicture(seedId) {
         return await picture.findOne({
+            attributes: ['picture'],
             where: {
-                id: id,
+                seedId: seedId,
             },
         });
     }
@@ -38,6 +37,13 @@ class Picture {
                 seedId: seedId,
             },
         });
+    }
+    async addPicture(seedId,filename){
+        console.log(filename)
+        return await picture.create({
+            seedId:seedId,
+            picture:filename
+        })
     }
 }
 

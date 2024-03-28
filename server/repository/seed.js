@@ -9,6 +9,13 @@ class Seed {
             limit: 3,
         });
     }
+    async seedExist(id) {
+        return await seed.count({
+            where: {
+                id: id
+            }
+        });
+    }
     async allSeedsByName(page,substring) {
         return await seed.findAndCountAll({
             where: {

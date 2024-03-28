@@ -8,6 +8,10 @@ const picture = sequelize.define("picturies", {
         primaryKey: true,
         allowNull: false,
     },
+    seedId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+    },
     picture: {
         type: Sequelize.STRING,
         allowNull: false,

@@ -5,13 +5,7 @@ const order = require("./order");
 const picture = require("./picture");
 const manufacturer = require("./manufacturer");
 const seedCategory = require("./seedCategory");
-const seedPicture = require("./seedPicture");
 
-guests.hasMany(picture, {
-    foreignKey: "pictureId",
-    sourceKey: "id",
-});
-users.belongsTo(seedPicture);
 
 
 guests.hasMany(category, {
@@ -32,7 +26,7 @@ guests.hasMany(seed, {
     foreignKey: "seedId",
     sourceKey: "id",
 });
-meetings.belongsTo(seedPicture);
+meetings.belongsTo(picture);
 
 
 guests.hasMany(manufacturer, {
