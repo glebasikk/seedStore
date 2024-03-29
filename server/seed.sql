@@ -25,17 +25,11 @@ CREATE TABLE seedCategories (
 	categoryId			INT
 );
 
-DROP TABLE IF EXISTS pictures;
-CREATE TABLE pictures (
+DROP TABLE IF EXISTS picturies;
+CREATE TABLE picturies (
 	id		 			INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
+    seedId				INT             NOT NULL,
     picture				varchar(255) 	NOT NULL
-);
-
-DROP TABLE IF EXISTS seedPictures;
-CREATE TABLE seedPictures (
-	id		 			    INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
-    seedId				    INT,
-    pictureId				INT
 );
 
 DROP TABLE IF EXISTS seeds;
@@ -63,14 +57,19 @@ CREATE TABLE baskets (
     totalPrice          INT                 NOT NULL
 );
 
+DROP TABLE IF EXISTS additionalInformations;
+CREATE TABLE additionalInformations (
+	id		 			INT 			    NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
+    seedId				int                 NOT NULL,
+    title				varchar(255)        NOT NULL,
+    content				varchar(255)        NOT NULL
+);
 
-
-ALTER TABLE `seedPictures` 
-	ADD CONSTRAINT `FK_pictures_id_seedPictures_PictureId` 
-    FOREIGN KEY (`pictureId`) REFERENCES `pictures`(`id`)
+ALTER TABLE `additionalInformations` 
+	ADD CONSTRAINT `FK_seeds_id_addInfo_seedId` 
+    FOREIGN KEY (`seedId`) REFERENCES `seeds`(`id`)
 		ON DELETE CASCADE 
-		ON UPDATE CASCADE;
-        
+		ON UPDATE CASCADE;        
 
 ALTER TABLE `seedCategories` 
 	ADD CONSTRAINT `FK_categories_id_seedCategories_categoryId` 
@@ -78,8 +77,8 @@ ALTER TABLE `seedCategories`
 		ON DELETE CASCADE 
 		ON UPDATE CASCADE;
 
-ALTER TABLE `seedPictures` 
-	ADD CONSTRAINT `FK_seeds_id_seedPictures_seedId` 
+ALTER TABLE `picturies` 
+	ADD CONSTRAINT `FK_seeds_id_picturies_seedId` 
     FOREIGN KEY (`seedId`) REFERENCES `seeds`(`id`)
 		ON DELETE CASCADE 
 		ON UPDATE CASCADE;
@@ -133,20 +132,12 @@ VALUES
        ( 2,1,11,1),
        ( 2,2,2,333);
         
-INSERT INTO `pictures` (id,picture)
+INSERT INTO `picturies` (id,seedId,picture)
 VALUES 
-       ( 1,"pic1"),
-       ( 2,"pic2"),
-       ( 3,"pic3");        
-
-INSERT INTO `seedPictures` (seedId, pictureId)
-VALUES 
-       ( 1,1),
-       ( 2,1),
-       ( 2,3),
-       ( 2,2),
-       ( 1,2);           
-
+       ( 1,1,"pic1"),
+       ( 2,2,"pic2"),
+       ( 3,3,"pic3");        
+        
 INSERT INTO `categories` (name,priority)
 VALUES 
        ( "category1",1),
@@ -168,7 +159,14 @@ VALUES
        ( 3,4),
        ( 3,1);   
 
-
+INSERT INTO `additionalInformations` (seedId, title, content)
+VALUES 
+       ( 1,"topic1","info1"),
+       ( 1,"topic2","info2"),
+       ( 2,"topic3","info3"),
+       ( 2,"topic4","info4"),
+       ( 3,"topic5","info5"),
+       ( 3,"topic6","info6");  
 
 #SELECT *  FROM seeds   left JOIN seedPictures ON seeds.id=seedPictures.seedId 
 #SELECT *  FROM seeds   left JOIN seedCategories ON seeds.id=seedCategories.seedId 
