@@ -20,6 +20,25 @@ class Category {
             next(e);
         }
     }
+    async addCategoryToSeed(req,res,next){
+        try{
+            let result = await category.addCategoryToSeed(req.body)
+            return res.status(200).json(result);
+            
+        }catch (e) {
+            next(e);
+        }
+    }
+    
+    async delConnectionSeedAndCategory(req,res,next){
+        try{
+            let result = await category.delConnectionSeedAndCategory(req.body)
+            return res.status(200).json(result);
+            
+        }catch (e) {
+            next(e);
+        }
+    }
 }
 
 

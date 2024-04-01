@@ -13,7 +13,12 @@ const additionalInfoOfCurrentSeed = require("../controller/additionalInformation
 
 router.get("/", jsonParser, seed.sortSeeds);
 router.post("/", jsonParser, seed.sortSeeds);
+router.post("/addseed", jsonParser, seed.addSeed);
+router.post("/updateseed", jsonParser, seed.updateSeed);
+router.post("/delseed", jsonParser, seed.delSeed);
 router.post("/seedcategories", jsonParser, category.seedCategories)
+router.post("/addcategorytoSeed", jsonParser, category.addCategoryToSeed)
+router.post("/delconnectionseedandcategory", jsonParser, category.delConnectionSeedAndCategory)
 router.post("/seedpictures", jsonParser, picture.seedPicturies)
 router.post("/seedfirstpicture", jsonParser, picture.seedFirstPicture)
 router.post("/addpicture", jsonParser,   upload.single("file") ,picture.addPicture)

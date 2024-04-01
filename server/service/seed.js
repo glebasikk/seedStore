@@ -11,7 +11,7 @@ class Seed {
         let page = pageMech(offset)
         let tmpMas = []
         if (substr == null){
-            if (categories == null){
+            if (categories == null || categories.length == 0){
                 let result = await seed.allSeeds(page);
                 return result
             }
@@ -81,7 +81,7 @@ class Seed {
 
 
         }
-        if (categories == null){
+        if (categories == null || categories.length == 0){
             let result = await seed.allSeedsByName(page,substr);
             return result
         }
@@ -155,8 +155,30 @@ class Seed {
         result = await category.seedCategories(tmpMas)
         return result
     }
-}
+    async addSeed(body){
+        let name = body.name
+        let info = body.info
+        let price = body.price
+        let result = await seed.addSeed(name,info,price)
+        return result
+    }
+    async updateSeed(body){
+        let id = body.id
+        let name = body.name
+        let info = body.info
+        let price = body.price
+        let result = await seed.updateSeed(id,name,info,price)
+        return result
+    }
+    async delSeed(body){
+        let id = body.id
+        let result = await seed.delSeed(id)
+        await category.delSeed(id)
+        return result
+    }
 
+}
+    
 
 
 function pageMech (offset){

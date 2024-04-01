@@ -3,12 +3,56 @@ const { Op } = require('sequelize')
 
 
 class Seed {
+    async addSeed(name,info,price,manufdcturerId){
+
+        return await seed.create({
+            name:name,
+            info: info,
+            price: price,
+            manufdcturerId
+        })
+    }
+    async delSeed(id){
+        return await seed.destroy({
+            where: {
+                id:id
+            }
+        })
+    }
+    async updateSeed(id,name,info,price,manufdcturerId){
+        return await seed.update(
+            {
+                name:name,
+                info: info,
+                price: price,
+                manufdcturerId,
+            },
+            {
+                where:{
+                    id: id
+                }
+            }
+
+        )
+    }
+
+
     async allSeeds(page) {
         return await seed.findAndCountAll({
             offset: page,
             limit: 3,
         });
     }
+
+    async seedById(id) {
+        return await seed.findOne({
+            where: {
+                id: id
+            }
+        });
+    }
+
+
     async seedExist(id) {
         return await seed.count({
             where: {

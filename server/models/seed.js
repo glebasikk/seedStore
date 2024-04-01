@@ -20,10 +20,6 @@ const seed = sequelize.define("seeds", {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    manufacturerId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-    }
 });
 
 module.exports = seed;

@@ -30,7 +30,38 @@ class Category {
         });
     }
 
-    
+    async delSeed (seedId){
+        return await seedCategory.destroy({
+            where: {
+                seedId: seedId
+            }
+        })
+    }
+
+
+    async delConnectionSeedAndCategory (categoryId,seedId){
+        return await seedCategory.destroy({
+            where: {
+                categoryId: categoryId,
+                seedId: seedId
+            }
+        })
+    }
+
+    async addCategoryToSeed (seedId, categoryId){
+        return await seedCategory.create({
+            seedId:seedId,
+            categoryId: categoryId
+        })
+    } 
+
+    async categoryById(id) {
+        return await category.findOne({
+            where: {
+                id: id
+            }
+        });
+    }
 
 
     async priority(id,priority){

@@ -19,6 +19,33 @@ class Seed {
             next(e);
         }
     }
+    async addSeed (req,res,next){
+        try{
+            let result = await seed.addSeed(req.body);
+            return res.status(200).json(result);
+        }
+        catch(e){
+            next(e);
+        }
+    }
+    async updateSeed (req,res,next){
+        try{
+            let result = await seed.updateSeed(req.body);
+            return res.status(200).json(result);
+        }
+        catch(e){
+            next(e);
+        }
+    }
+    async delSeed (req,res,next){
+        try{
+            let result = await seed.delSeed(req.body);
+            return res.status(200).json(result);
+        }
+        catch(e){
+            next(e);
+        }
+    }
 }
 
 

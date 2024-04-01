@@ -3,7 +3,6 @@ const basket = require("./basket");
 const category = require("./category");
 const order = require("./order");
 const picture = require("./picture");
-const manufacturer = require("./manufacturer");
 const seedCategory = require("./seedCategory");
 const additionalInformation = require("./additionalInformation")
 
@@ -33,14 +32,6 @@ guests.hasMany(seed, {
     sourceKey: "id",
 });
 meetings.belongsTo(additionalInformation);
-
-
-guests.hasMany(manufacturer, {
-    foreignKey: "manufacturerId",
-    sourceKey: "id",
-});
-meetings.belongsTo(seed);
-
 
 guests.hasMany(seed, {
     foreignKey: "seedId",
