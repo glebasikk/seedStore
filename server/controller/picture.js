@@ -31,6 +31,18 @@ class Picture {
             next(e);
         }
     }
+    async downloadPicture(req,res,next){
+        try{
+            let body = req.query
+            console.log()
+            let result = await picture.downloadPicture(body)
+            return res.status(200).sendFile(result);
+            
+        }catch (e) {
+            next(e);
+        }
+    }
+
     async addPicture (req, res,next){
         try{
             
@@ -47,6 +59,29 @@ class Picture {
             let result = await picture.addPicture(value,file)
             return res.status(200).json(result);
             
+        }catch (e) {
+            next(e);
+        }
+    }
+    async delPicture (req, res,next){
+        try{
+            let body = req.body
+            let result = await picture.delPicture(body)
+            return res.status(200).json(result);
+            
+        }catch (e) {
+            next(e);
+        }
+    }
+    async updatePicture (req, res,next){
+        try{
+            let file = req.file
+            if (req.file == undefined) {
+                return res.status(200).send(`You must select a file.`);
+            }
+            let body = req.body
+            let result = await picture.updatePicture(body,file)
+            return res.status(200).json(result);
         }catch (e) {
             next(e);
         }

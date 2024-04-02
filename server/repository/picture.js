@@ -6,8 +6,17 @@ class Picture {
     async seedPictures(seedId) {
         console.log(seedId)
         return await picture.findAll({
+            
             where: {
                 seedId: seedId,
+            },
+        });
+    }
+    async pictureByName(img) {
+        return await picture.count({
+            
+            where: {
+                picture: img,
             },
         });
     }
@@ -39,11 +48,43 @@ class Picture {
         });
     }
     async addPicture(seedId,filename){
-        console.log(filename)
         return await picture.create({
             seedId:seedId,
             picture:filename
         })
+    }
+    async delPicture(id){
+        return await picture.destroy({
+            where:{
+                id:id
+            }
+        })
+    }
+    async pictureExist(id){
+        return await picture.count({
+            where:{
+                id:id
+            }
+        })
+    }
+    async pictureById(id){
+        return await picture.findOne({
+            where:{
+                id:id
+            }
+        })
+    }
+    async updatePicture(id,filename){
+        return await picture.update({
+            picture:filename
+            
+        },
+        {
+            where:{
+                id:id
+            }
+        }
+        )
     }
 }
 
