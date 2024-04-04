@@ -19,3 +19,4 @@ const session = sequelize.define("sessions", {
 });
 
 module.exports = session;
+

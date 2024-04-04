@@ -17,9 +17,7 @@ DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions (
 	id 				INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
 	userId	 		INT 			NOT NULL,
-	token	 		varchar(255) 	NOT NULL,
-	rtoken 	 		varchar(255) 	NOT NULL
-	
+	token	 		varchar(255) 	NOT NULL
 );
 
 DROP TABLE IF EXISTS categories;
@@ -50,6 +48,16 @@ CREATE TABLE seeds (
     name				varchar(255)        NOT NULL,
     info				varchar(255),        
     price               INT
+);
+
+
+DROP TABLE IF EXISTS carts;
+CREATE TABLE carts (
+	id		 			INT 			    NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
+    seedId				int                 NOT NULL,
+    userId              int                 NOT NULL,
+    amount				int                 NOT NULL,
+    price               INT                 NOT NULL
 );
 
 DROP TABLE IF EXISTS orders;
@@ -90,6 +98,12 @@ ALTER TABLE `seedCategories`
 
 ALTER TABLE `picturies` 
 	ADD CONSTRAINT `FK_seeds_id_picturies_seedId` 
+    FOREIGN KEY (`seedId`) REFERENCES `seeds`(`id`)
+		ON DELETE CASCADE 
+		ON UPDATE CASCADE;
+        
+ALTER TABLE `carts` 
+	ADD CONSTRAINT `FK_seeds_id_carts_seedId` 
     FOREIGN KEY (`seedId`) REFERENCES `seeds`(`id`)
 		ON DELETE CASCADE 
 		ON UPDATE CASCADE;
@@ -171,11 +185,6 @@ VALUES
        ( 3,"topic5","info5"),
        ( 3,"topic6","info6");  
 
-#SELECT *  FROM seeds   left JOIN seedPictures ON seeds.id=seedPictures.seedId 
-#SELECT *  FROM seeds   left JOIN seedCategories ON seeds.id=seedCategories.seedId 
-#select * from seeds  ;
-#SELECT seedPictures.id,seedId,picture  FROM seedPictures   left JOIN pictures ON pictures.id=seedPictures.pictureId 
-#SELECT seedCategories.id,seedId,category  FROM seedCategories   left JOIN categories ON categories.id=seedCategories.categoryId 
 
 
 

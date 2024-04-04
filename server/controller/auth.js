@@ -33,11 +33,9 @@ class Auth {
             next(e);
         }
     }
-    async refreshToken(req, res, next) {
+    async session(req, res, next) {
         try {
-            let data = req.body
-            let validation = await refreshTokenValidator.validateAsync(data)
-            let response = await authService.refreshToken(data);
+            let response = await authService.session();
             return res.json(response);
         } catch (e) {
             if(e.isJoi ==true){

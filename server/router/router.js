@@ -9,6 +9,7 @@ const upload = require("../midleware/upload")
 const additionalInfoOfCurrentSeed = require("../controller/additionalInformation")
 const auth = require("../controller/auth")
 const authMidleware = require("../midleware/auth");
+const cart = require("../controller/cart")
 
 
 router.get("/", jsonParser, seed.sortSeeds);
@@ -30,6 +31,8 @@ router.post("/addadditionaiInfo", jsonParser, additionalInfoOfCurrentSeed.addAdd
 router.post("/deladditionaiInfo", jsonParser, additionalInfoOfCurrentSeed.delAdditionalInfo);
 router.post("/registration",jsonParser, auth.registration);
 router.post("/auth",jsonParser, auth.login);
+router.get("/addsession", auth.session)
+router.post("/addcart",jsonParser,authMidleware(["admin"]),cart.addCart)
 
 
 module.exports = router;

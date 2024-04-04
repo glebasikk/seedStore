@@ -8,7 +8,6 @@ const Unauthorized = require("../errors/Forbidden");
 module.exports = function (role) {
     return function (req, res, next) {
         try {
-
             let token = req.headers.authorization
             if (!token) {
                 throw new Unauthorized("access denied");

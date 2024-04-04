@@ -28,20 +28,25 @@ class Auth {
         data.userId = user.dataValues.id
         const token = tokenGenerator.generateToken(user);
         data.token = token
+
         await session.delSession(data)
         await session.addSession(data)
         return { token};
     }
-    async refreshToken(data) {
-            if ((await userRepo.findUserByUsername(data.username)) == null) {
-                throw new NotFound("user does not exist");
-            }
-            const user = await userRepo.findUserByUsername(data.username);
-            const token = tokenGenerator.generateToken(user);
-            const refreshToken = tokenGenerator.generateRefreshToken(user)
-            return { token, refreshToken};
+    async session() {
+        let data = {}
+        data.username = "guest"
+        data.password = "guest"
+        data.userRole = "guest"
+        let user = await userRepo.addUser(data);
+        data.userId = user.dataValues.id
+        const token = tokenGenerator.generateToken(user);
+        data.token = token
+        
+        await session.delSession(data)
+        await session.addSession(data)
+        return { token};
     }
-
 }
 
 module.exports = new Auth();
