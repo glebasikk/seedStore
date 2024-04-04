@@ -8,15 +8,11 @@ const session = sequelize.define("sessions", {
         primaryKey: true,
         allowNull: false,
     },
-    user_id: {
+    userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
     token: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    rtoken: {
         type: Sequelize.STRING,
         allowNull: false,
     },

@@ -3,12 +3,24 @@ CREATE DATABASE seed DEFAULT CHARACTER SET utf16;
 
 USE seed;
 
-DROP TABLE IF EXISTS manufacturers;
-CREATE TABLE manufacturers (
-	id		 				INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
-    name				    varchar(255) 	NOT NULL
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+	id 				    INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
+	username	 		varchar(50) 	NOT NULL,
+	password 	 		varchar(255) 	NOT NULL,
+	role 				varchar(50) 	NOT NULL
+	
 );
 
+DROP TABLE IF EXISTS sessions;
+CREATE TABLE sessions (
+	id 				INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
+	userId	 		INT 			NOT NULL,
+	token	 		varchar(255) 	NOT NULL,
+	rtoken 	 		varchar(255) 	NOT NULL
+	
+);
 
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
@@ -37,8 +49,7 @@ CREATE TABLE seeds (
 	id		 			INT 			    NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
     name				varchar(255)        NOT NULL,
     info				varchar(255),        
-    price               INT, 
-    manufacturerId       INT
+    price               INT
 );
 
 DROP TABLE IF EXISTS orders;
@@ -89,11 +100,6 @@ ALTER TABLE `seedCategories`
 		ON DELETE CASCADE 
 		ON UPDATE CASCADE;        
 
-ALTER TABLE `seeds` 
-	ADD CONSTRAINT `FK_manufctories_id_seeds_ManufactoryId` 
-    FOREIGN KEY (`manufacturerId`) REFERENCES `manufacturers`(`id`)
-		ON DELETE CASCADE 
-		ON UPDATE CASCADE;
         
 ALTER TABLE `baskets` 
 	ADD CONSTRAINT `FK_seeds_id_baskets_seedId` 
@@ -107,19 +113,15 @@ ALTER TABLE `baskets`
 		ON DELETE CASCADE 
 		ON UPDATE CASCADE;        
 
-INSERT INTO `manufacturers` (name)
-VALUES 
-       ("Sad i Ogorod"),
-       ("Usadba"),
-       ("Dobronom");  
+
         
-INSERT INTO `seeds` (name,info,price,manufacturerId)
+INSERT INTO `seeds` (name,info,price)
 VALUES 
-       ( "tomat","info1",228,3),
-       ( "bean","info3",228,2),
-       ( "white tomat","info4",228,3),
-       ( "melon","info2",333,2),
-       ( "pepper","info5",228,1);
+       ( "tomat","info1",228),
+       ( "bean","info3",228),
+       ( "white tomat","info4",228),
+       ( "melon","info2",333),
+       ( "pepper","info5",228);
            
 INSERT INTO `orders` (number, totalPrice)
 VALUES 
@@ -153,10 +155,11 @@ VALUES
 INSERT INTO `seedCategories` (seedId, categoryId)
 VALUES 
        ( 1,1),
-       ( 1,3),
-       ( 2,2),
-       ( 2,3),
-       ( 3,4),
+       ( 1,5),
+       (1,7),
+       ( 2,1),
+       ( 2,4),
+       ( 3,7),
        ( 3,1);   
 
 INSERT INTO `additionalInformations` (seedId, title, content)

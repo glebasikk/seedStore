@@ -8,9 +8,10 @@ const {sortSeedsValidation,numberValidator} = require("../midleware/validator");
 class Seed {
     async sortSeeds(req, res, next) {
         try {
+            console.log(req.body)
             let {value, error} = sortSeedsValidation.validate(req.body)
             if (error){
-                return res.status(422).json(error)
+                return res.status(422).json(error.details)
             } 
             let query = await numberValidator.validateAsync(req.query)
             let result = await seed.sortSeeds(query,value);

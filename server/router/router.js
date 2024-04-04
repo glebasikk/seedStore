@@ -7,12 +7,12 @@ const jsonParser = bodyParser.json()
 const picture = require("../controller/picture")
 const upload = require("../midleware/upload")
 const additionalInfoOfCurrentSeed = require("../controller/additionalInformation")
-
-
+const auth = require("../controller/auth")
+const authMidleware = require("../midleware/auth");
 
 
 router.get("/", jsonParser, seed.sortSeeds);
-router.post("/", jsonParser, seed.sortSeeds);
+router.post("/", jsonParser,authMidleware(["admin"]), seed.sortSeeds);
 router.post("/addseed", jsonParser, seed.addSeed);
 router.post("/updateseed", jsonParser, seed.updateSeed);
 router.post("/delseed", jsonParser, seed.delSeed);
@@ -26,7 +26,10 @@ router.post("/addpicture", jsonParser,   upload.single("file") ,picture.addPictu
 router.post("/delpicture", jsonParser, picture.delPicture);
 router.post("/updatepicture", jsonParser,upload.single("file"), picture.updatePicture);
 router.post("/additionalInfo", jsonParser, additionalInfoOfCurrentSeed.additionalInfoOfCurrentSeed);
-router.post("/addAdditionalInfo", jsonParser, additionalInfoOfCurrentSeed.addAdditionalInfo);
-router.post("/delAdditionalInfo", jsonParser, additionalInfoOfCurrentSeed.delAdditionalInfo);
+router.post("/addadditionaiInfo", jsonParser, additionalInfoOfCurrentSeed.addAdditionalInfo);
+router.post("/deladditionaiInfo", jsonParser, additionalInfoOfCurrentSeed.delAdditionalInfo);
+router.post("/registration",jsonParser, auth.registration);
+router.post("/auth",jsonParser, auth.login);
+
 
 module.exports = router;

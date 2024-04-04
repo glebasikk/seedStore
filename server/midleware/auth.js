@@ -1,5 +1,5 @@
 const { secret } = require("../config");
-const session = require("../repository/sessions");
+const session = require("../repository/session");
 const jwt = require("jsonwebtoken");
 const Unauthorized = require("../errors/Forbidden");
 
@@ -18,7 +18,7 @@ module.exports = function (role) {
             let hasRole = false;
             data.token = token
             
-            req.body.userId = data.id
+      
             if (data.type != "Access"){
                 throw new Unauthorized("Wrong token type")
             }
