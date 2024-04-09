@@ -1,13 +1,13 @@
 const seed = require("../repository/seed");
 const category = require("../repository/category")
-
+const InrenalServerError = require("../errors/InrenalServerError")
 
 
 class Seed {
     async sortSeeds(query,body) {
         let offset = query.page 
         let substr = body.name
-        let categories = body.categories
+        let categories = body.category
         let page = pageMech(offset)
         let tmpMas = []
         if (substr == null){
@@ -48,8 +48,6 @@ class Seed {
             
 
             let len = priorityMas.length-1
-            console.log(len)
-            // }
             let tmpResult = await category.selectedCategories(priorityMas[0])
             
             for (let i = 0; i<tmpResult.length; i++){
@@ -145,22 +143,25 @@ class Seed {
         return result
         
     }
-    async seedCategories(body){
-        let seedId = body.seedId
-        let tmpMas = []
-        let result = await category.seedCategoriesId(seedId)
-        for (let i = 0; i<result.length; i++){
-            tmpMas.push(result[i].dataValues.categoryId)
-        }
-        result = await category.seedCategories(tmpMas)
-        return result
-    }
+    // async seedCategories(body){
+    //     let seedId = body.seedId
+    //     let tmpMas = []
+    //     let result = await category.seedCategoriesId(seedId)
+    //     for (let i = 0; i<result.length; i++){
+    //         tmpMas.push(result[i].dataValues.categoryId)
+    //     }
+    //     result = await category.seedCategories(tmpMas)
+    //     return result
+    // }
     async addSeed(body){
         let name = body.name
         let info = body.info
         let price = body.price
         let result = await seed.addSeed(name,info,price)
-        return result
+        if (result == null) {
+            throw new InrenalServerError("No value is created");
+        }
+        return true
     }
     async updateSeed(body){
         let id = body.id
@@ -168,12 +169,12 @@ class Seed {
         let info = body.info
         let price = body.price
         let result = await seed.updateSeed(id,name,info,price)
-        return result
+        return result[0]
     }
     async delSeed(body){
         let id = body.id
         let result = await seed.delSeed(id)
-        await category.delSeed(id)
+        console.log(result)
         return result
     }
 

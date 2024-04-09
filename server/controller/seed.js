@@ -1,5 +1,12 @@
 const seed = require("../service/seed");
-const {sortSeedsValidation,numberValidator} = require("../midleware/validator");
+const Response = require("../help/Response");
+const {
+    sortSeedsValidation,
+    numberValidator,
+    addSeedValidation,
+    updateSeedValidation,
+    delSeedValidation,
+} = require("../midleware/validator");
 
 
 
@@ -11,7 +18,7 @@ class Seed {
       
             let {value, error} = sortSeedsValidation.validate(req.body)
             if (error){
-                return res.status(422).json(error.details)
+                return res.status(422).json(new Response("422", error.details));
             } 
             let query = await numberValidator.validateAsync(req.query)
             let result = await seed.sortSeeds(query,value);
@@ -22,8 +29,15 @@ class Seed {
     }
     async addSeed (req,res,next){
         try{
-            let result = await seed.addSeed(req.body);
-            return res.status(200).json(result);
+
+            let {value, error} = addSeedValidation.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            } 
+            let result = await seed.addSeed(value);
+            if(result == true){
+                return res.json(new Response("200", "Value successfully added"));
+            }
         }
         catch(e){
             next(e);
@@ -31,8 +45,15 @@ class Seed {
     }
     async updateSeed (req,res,next){
         try{
-            let result = await seed.updateSeed(req.body);
-            return res.status(200).json(result);
+            let {value, error} = updateSeedValidation.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            } 
+            let result = await seed.updateSeed(value);
+            if (result==true){
+                return res.status(200).json(new Response("200", "Initial value updated successfully"));
+            }
+            return res.status(200).json(new Response("200", "The initial value is equal to the changed value"));
         }
         catch(e){
             next(e);
@@ -40,8 +61,15 @@ class Seed {
     }
     async delSeed (req,res,next){
         try{
-            let result = await seed.delSeed(req.body);
-            return res.status(200).json(result);
+            let {value, error} = delSeedValidation.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            } 
+            let result = await seed.delSeed(value);
+            if (result==true){
+                return res.status(200).json(new Response("200", "Initial value deleted successfully"));
+            }
+            return res.status(200).json(new Response("200", "The initial value not exist"));
         }
         catch(e){
             next(e);

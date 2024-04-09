@@ -13,10 +13,10 @@ const cart = require("../controller/cart")
 
 
 router.get("/", jsonParser, seed.sortSeeds);
-router.post("/", jsonParser,authMidleware(["admin"]), seed.sortSeeds);
-router.post("/addseed", jsonParser, seed.addSeed);
-router.post("/updateseed", jsonParser, seed.updateSeed);
-router.post("/delseed", jsonParser, seed.delSeed);
+router.post("/", seed.sortSeeds);
+router.post("/addseed",jsonParser, authMidleware(["admin"]),seed.addSeed);
+router.post("/updateseed", jsonParser,authMidleware(["admin"]), seed.updateSeed);
+router.post("/delseed", jsonParser, authMidleware(["admin"]),seed.delSeed);
 router.post("/seedcategories", jsonParser, category.seedCategories);
 router.post("/addcategorytoSeed", jsonParser, category.addCategoryToSeed);
 router.post("/delconnectionseedandcategory", jsonParser, category.delConnectionSeedAndCategory);
@@ -31,8 +31,11 @@ router.post("/addadditionaiInfo", jsonParser, additionalInfoOfCurrentSeed.addAdd
 router.post("/deladditionaiInfo", jsonParser, additionalInfoOfCurrentSeed.delAdditionalInfo);
 router.post("/registration",jsonParser, auth.registration);
 router.post("/auth",jsonParser, auth.login);
-router.get("/addsession", auth.session)
+router.get( "/addsession", auth.session)
 router.post("/addcart",jsonParser,authMidleware(["admin"]),cart.addCart)
+router.get("/usercart",jsonParser,authMidleware(["admin"]),cart.userCart)
+router.post("/updatecart",jsonParser,authMidleware(["admin"]),cart.updateCart)
+router.post("/deletecart",jsonParser,authMidleware(["admin"]),cart.deleteCart)
 
 
 module.exports = router;

@@ -14,6 +14,8 @@ module.exports = function (role) {
             }
             token = token.split(" ")[1];
             const data = jwt.verify(token, secret);
+            req.body.userId = data.id;
+            console.log(data)
             let hasRole = false;
             data.token = token
             

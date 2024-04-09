@@ -1,12 +1,16 @@
 const cart = require("../models/cart");
 
 class Carts {
-    // async allBaskets() {
-    //     return await cart.findAll();
-    // }
+    async findCartByUserIdAndSeedId(id) {
+        return await cart.findAll({
+            where:{
+                id:id
+            }
+        });
+    }
 
-    async userCart(user) {
-        return await cart.findAll({ where: { user: user } });
+    async userCart(userId) {
+        return await cart.findAll({ where: { userId: userId } });
     }
 
     async addCart(seedId, userId, price, amount) {
@@ -18,27 +22,38 @@ class Carts {
         });
     }
 
-    async findId(id) {
+    async findCartByUserIdAndSeedId(userId, seedId) {
+        return await cart.findOne({ where: 
+            { 
+                userId: userId,
+                seedId: seedId
+            } 
+        });
+    }
+
+    async findCartById(id) {
         return await cart.findOne({ where: { id: id } });
     }
 
-    // async update(id, pizzaID, amount, price, user, basket) {
-    //     return await cart.update(
-    //         {
-    //             pizza_id: pizzaID,
-    //             amount: amount,
-    //             price: price,
-    //             user: user,
-    //             basket: basket,
-    //         },
-    //         { where: { id: id } }
-    //     );
-    // }
+    async changeSeedsAmount(id,amount,price) {
+        return await cart.update(
+            {
+                amount:amount,
+                price: price
+            },
+            {
+                where:
+                {
+                    id: id,
+                }
+            }
 
-    // async deletePizza(id) {
-    //     let x = await cart.destroy({ where: { id: id } });
-    //     return await x;
-    // }
+        );
+    }
+
+    async deleteCart(id) {
+        return await cart.destroy({ where: { id: id } });
+    }
 
     // async userAndBasket(user, basket) {
     //     return await cart.findOne({

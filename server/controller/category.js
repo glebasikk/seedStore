@@ -4,7 +4,6 @@ const {seedCategoriesValidator} = require("../midleware/validator");
 
 
 
-
 class Category {
     async seedCategories(req,res,next){
         try{

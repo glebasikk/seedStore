@@ -11,9 +11,30 @@ const seedCategoriesValidator = joi.object({
         seedId: joi.number().integer().min(1)    
 });
 
+const delSeedValidation = joi.object({
+        userId: joi.number(),
+        id: joi.number().required(),
+});
+
+
+const addSeedValidation = joi.object({
+        userId: joi.number(),
+        name: joi.string().required(),
+        price: joi.number().required(),
+        info: joi.string()   
+});
+
+const updateSeedValidation = joi.object({
+        userId: joi.number(),
+        id: joi.number().required(),
+        name: joi.string(),
+        price: joi.number(),
+        info: joi.string()   
+});
+
 const sortSeedsValidation = joi.object({
         name: joi.string(),
-        categories: joi.array().items(joi.number()),   
+        category: joi.array().items(joi.number()),   
 });
 
 const updateMeetingValidation = joi.object({
@@ -43,14 +64,12 @@ const registrationAndAuthValidation = joi.object({
         password: joi.string().required()    
 });
 
-const refreshTokenValidator = joi.object({
-        userId: joi.number().required(),
-        username: joi.string().required(),
-        type: joi.string().required(),
-        role: joi.string().required(),
-});
+
   
 module.exports = {
+        delSeedValidation,
+        updateSeedValidation,
+        addSeedValidation,
         numberValidator,
         sortSeedsValidation,
         seedCategoriesValidator,
@@ -58,5 +77,4 @@ module.exports = {
         filteredMeetings,
         registrationAndAuthValidation,
         addGuestValidator,
-        refreshTokenValidator
 }

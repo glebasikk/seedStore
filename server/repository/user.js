@@ -5,7 +5,12 @@ class User {
         return await user.findOne({ where: { username: username } });
     }
     async findUserById(id) {
-        return await user.findOne({ where: { id: id } });
+        console.log(id)
+        return await user.findOne({
+             where: {
+                 id: id 
+             }
+        });
     }
     async addUser(data) {
         return await user.create({

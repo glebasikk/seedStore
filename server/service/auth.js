@@ -13,7 +13,7 @@ class Auth {
             throw new BadRequest("user exist");
         }
         data.password = bcrypt.hashSync(data.password, 5);
-        data.userRole = "admin"
+        data.userRole = "guest"
         return await userRepo.addUser(data);
     }
     async login(data) {
