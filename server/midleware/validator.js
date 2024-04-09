@@ -8,12 +8,20 @@ const numberValidator = joi.object({
 
 
 const seedCategoriesValidator = joi.object({
-        seedId: joi.number().integer().min(1)    
+        userId: joi.number(),
+        seedId: joi.number().integer().min(1).required()   
 });
 
 const delSeedValidation = joi.object({
         userId: joi.number(),
-        id: joi.number().required(),
+        id: joi.number().integer().min(1).required()
+});
+
+
+const addCategoryToSeedValidator = joi.object({
+        userId: joi.number(),
+        seedId: joi.number().integer().min(1).required(),  
+        categoryId: joi.number().integer().min(1).required() 
 });
 
 
@@ -26,7 +34,7 @@ const addSeedValidation = joi.object({
 
 const updateSeedValidation = joi.object({
         userId: joi.number(),
-        id: joi.number().required(),
+        id: joi.number().integer().min(1).required(),
         name: joi.string(),
         price: joi.number(),
         info: joi.string()   
@@ -67,6 +75,7 @@ const registrationAndAuthValidation = joi.object({
 
   
 module.exports = {
+        addCategoryToSeedValidator,
         delSeedValidation,
         updateSeedValidation,
         addSeedValidation,

@@ -1,8 +1,8 @@
 const seed = require("../repository/seed");
 const category = require("../repository/category")
 const picture = require("../repository/picture")
-
-
+const NotFound = require("../errors/NotFound")
+const InrenalServerError = require("../errors/InrenalServerError")
 
 class Category {
     async seedCategories(body){
@@ -20,16 +20,16 @@ class Category {
         let categoryId = body.categoryId
         let tmp = await seed.seedById(seedId)
         if(tmp == null){
-            return "errooooooooooooooooooooooooooooooooooor"
+                throw new NotFound("Seed doesn't exist");
         }
         tmp = await category.categoryById(categoryId)
         if(tmp == null){
-            return "errooooooooooooooooooooooooooooooooooor"
+            throw new NotFound("Category doesn't exist");
         }
         tmp = await category.selectedCategoriesAndSeedId(categoryId,seedId)
 
         if(tmp[0] != undefined){
-            return "exxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxists"
+            throw new InrenalServerError("Coombinatin of seed and category exist");
         }
         let result = await category.addCategoryToSeed(seedId,categoryId)
         return result
@@ -39,16 +39,16 @@ class Category {
         let categoryId = body.categoryId
         let tmp = await seed.seedById(seedId)
         if(tmp == null){
-            return "errooooooooooooooooooooooooooooooooooor"
+            throw new NotFound("Seed doesn't exist");
         }
         tmp = await category.categoryById(categoryId)
         if(tmp == null){
-            return "errooooooooooooooooooooooooooooooooooor"
+            throw new NotFound("Category doesn't exist");
         }
         tmp = await category.selectedCategoriesAndSeedId(categoryId,seedId)
 
         if(tmp[0] == undefined){
-            return "does not exxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxists"
+            throw new InrenalServerError("Coombinatin of seed and category does not exist");
         }
         let result = await category.delConnectionSeedAndCategory(categoryId, seedId)
         return result

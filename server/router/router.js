@@ -18,7 +18,7 @@ router.post("/addseed",jsonParser, authMidleware(["admin"]),seed.addSeed);
 router.post("/updateseed", jsonParser,authMidleware(["admin"]), seed.updateSeed);
 router.post("/delseed", jsonParser, authMidleware(["admin"]),seed.delSeed);
 router.post("/seedcategories", jsonParser, category.seedCategories);
-router.post("/addcategorytoSeed", jsonParser, category.addCategoryToSeed);
+router.post("/addcategorytoSeed", jsonParser,authMidleware(["admin"]), category.addCategoryToSeed);
 router.post("/delconnectionseedandcategory", jsonParser, category.delConnectionSeedAndCategory);
 router.post("/seedpictures", jsonParser, picture.seedPicturies);
 router.post("/seedfirstpicture", jsonParser, picture.seedFirstPicture);

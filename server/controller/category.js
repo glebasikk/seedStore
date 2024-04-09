@@ -1,5 +1,9 @@
 const category = require("../service/category");
-const {seedCategoriesValidator} = require("../midleware/validator");
+const {
+    seedCategoriesValidator,
+    addCategoryToSeedValidator
+} = require("../midleware/validator");
+const Response = require("../help/Response");
 
 
 
@@ -9,11 +13,14 @@ class Category {
         try{
             let {value, error} = seedCategoriesValidator.validate(req.body)
             if (error){
-                return res.status(422).json(error)
+                return res.status(422).json(new Response("422", error.details));
             }
 
             let result = await category.seedCategories(value)
-            return res.status(200).json(result);
+            if (result == true){
+                return res.status(200).json(new Response("200", result));
+            }
+            return res.status(200).json(new Response("200", "current seed has no category"));
             
         }catch (e) {
             next(e);
@@ -21,9 +28,12 @@ class Category {
     }
     async addCategoryToSeed(req,res,next){
         try{
-            let result = await category.addCategoryToSeed(req.body)
-            return res.status(200).json(result);
-            
+            let {value, error} = addCategoryToSeedValidator.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            }
+            let result = await category.addCategoryToSeed(value)
+            return res.status(200).json(new Response("200", result));
         }catch (e) {
             next(e);
         }
@@ -31,8 +41,15 @@ class Category {
     
     async delConnectionSeedAndCategory(req,res,next){
         try{
-            let result = await category.delConnectionSeedAndCategory(req.body)
-            return res.status(200).json(result);
+            let {value, error} = addCategoryToSeedValidator.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            }
+            let result = await category.delConnectionSeedAndCategory(value)
+            if (result==true){
+                return res.status(200).json(new Response("200", "Initial value deleted successfully"));
+            }
+            return res.status(200).json(new Response("200", "The initial value not exist"));
             
         }catch (e) {
             next(e);
