@@ -8,13 +8,27 @@ class Category {
     async seedCategories(body){
         let seedId = body.seedId
         let tmpMas = []
+        if(seedId == undefined){
+
+        }
         let result = await category.seedCategoriesId(seedId)
         for (let i = 0; i<result.length; i++){
             tmpMas.push(result[i].dataValues.categoryId)
         }
+      
         result = await category.seedCategories(tmpMas)
+        console.log(result)
         return result
     }
+
+    async listOfCategories(){
+        let result = await category.listOfCategories()
+        if(result == null){
+            throw new NotFound("Category doesn't exist");
+        }
+        return result
+    }
+
     async addCategoryToSeed(body){
         let seedId = body.seedId
         let categoryId = body.categoryId

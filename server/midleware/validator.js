@@ -6,6 +6,16 @@ const numberValidator = joi.object({
         page: joi.number().integer().min(1)    
 });
 
+const updateImgNameValidator = joi.object({
+        userId: joi.number(),
+        id: joi.number().integer().min(1).required()   
+});
+
+const imgNameValidator = joi.object({
+        userId: joi.number(),
+        file: joi.string().required()   
+});
+
 
 const seedCategoriesValidator = joi.object({
         userId: joi.number(),
@@ -75,6 +85,8 @@ const registrationAndAuthValidation = joi.object({
 
   
 module.exports = {
+        updateImgNameValidator,
+        imgNameValidator,
         addCategoryToSeedValidator,
         delSeedValidation,
         updateSeedValidation,

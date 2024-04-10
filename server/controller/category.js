@@ -9,6 +9,16 @@ const Response = require("../help/Response");
 
 
 class Category {
+    async listOfCategories(req,res,next){
+        try{
+            let result = await category.listOfCategories()
+            return res.status(200).json(new Response("200", result));
+            
+            
+        }catch (e) {
+            next(e);
+        }
+    }
     async seedCategories(req,res,next){
         try{
             let {value, error} = seedCategoriesValidator.validate(req.body)
@@ -17,10 +27,8 @@ class Category {
             }
 
             let result = await category.seedCategories(value)
-            if (result == true){
-                return res.status(200).json(new Response("200", result));
-            }
-            return res.status(200).json(new Response("200", "current seed has no category"));
+            return res.status(200).json(new Response("200", result));
+            
             
         }catch (e) {
             next(e);

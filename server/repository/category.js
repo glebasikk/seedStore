@@ -17,6 +17,7 @@ class Category {
             group: 'seedId',
         });
     }
+    
 
     async selectedCategoriesAndSeedId(categoryId,seedId) {
         return await seedCategory.findAll({
@@ -85,6 +86,11 @@ class Category {
                 seedId: seedId,
             },
         });
+    }
+
+
+    async listOfCategories() {
+        return await category.findAll({});
     }
 
     async seedCategories(id) {
