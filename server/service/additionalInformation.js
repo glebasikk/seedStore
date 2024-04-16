@@ -19,7 +19,7 @@ class AdditionalInformation {
         if (title === undefined){
             return await additionalInformation.delAdditionalInfoBySeedId(seedId)
         }
-        let result = await additionalInformation.delAdditionalInfo(seedId,title)
+        let result = await additionalInformation.delAdditionalInfoBySeedIdAndTitle(seedId,title)
         return result
     }
 

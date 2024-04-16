@@ -12,7 +12,7 @@ class Auth {
             console.log(data)
             let validation = await registrationAndAuthValidation.validateAsync(data)
             let response = await authService.registration(data);
-            return res.json(new Response("200", "registration complete"));
+            return res.status(200).json(new Response("200", "registration complete"));
         } catch (e) {
             if(e.isJoi == true){
                 e.status = 422
@@ -25,7 +25,7 @@ class Auth {
             let data = req.body
             let validation = await registrationAndAuthValidation.validateAsync(data)
             let response = await authService.login(data);
-            return res.json(response);
+            return res.status(200).json(response);
         } catch (e) {
             if(e.isJoi ==true){
                 e.status = 422
@@ -36,7 +36,7 @@ class Auth {
     async session(req, res, next) {
         try {
             let response = await authService.session();
-            return res.json(response);
+            return res.status(200).json(response);
         } catch (e) {
             if(e.isJoi ==true){
                 e.status = 422

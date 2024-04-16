@@ -48,6 +48,8 @@ class Cart {
         let id = body.id
         let userId = body.userId
         let amount = body.amount
+        let seedId = body.seedId
+
         let tmp = await user.findUserById(userId)
         if (tmp == null) {
             throw new NotFound("User does not exist");
@@ -57,9 +59,18 @@ class Cart {
             throw new NotFound("Cart does not exist");
         }  
         let seedData = await seed.seedById(cartData.dataValues.seedId)
+        if (seedId != undefined) {
 
+            tmp = await seed.seedById(seedId)
+            if (tmp == null){
+                throw new NotFound("New seed does not exist");
+            }
+            let price = tmp.dataValues.price * amount;
+            let result =  cart.changeCartSeed(id,seedId,amount,price);
+            return result[0]
+        }  
         let price = seedData.dataValues.price * amount;
-        return await cart.changeSeedsAmount(id,amount,price);
+        return await cart.changeSeedsAmount(id,amount,price)[0];
     }
 }
 

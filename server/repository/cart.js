@@ -51,6 +51,24 @@ class Carts {
         );
     }
 
+    async changeCartSeed(id,seedId, amount,price) {
+        return await cart.update(
+            {   
+                seedId: seedId,
+                amount:amount,
+                price: price,
+
+            },
+            {
+                where:
+                {
+                    id: id,
+                }
+            }
+
+        );
+    }
+
     async deleteCart(id) {
         return await cart.destroy({ where: { id: id } });
     }

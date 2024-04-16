@@ -1,5 +1,5 @@
 let config = {
-    path:'H:/seedStore/server/',
+    path:'D:/seedStore/server/',
     secret: "secret"
 }
 

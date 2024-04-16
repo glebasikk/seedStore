@@ -1,6 +1,36 @@
 const joi = require('joi');
 
 
+const updateCartValidator = joi.object({
+        userId: joi.number(),
+        seedId: joi.number().integer().min(1),
+        amount: joi.number().integer().min(1)
+
+});
+
+const addCartValidator = joi.object({
+        userId: joi.number(),
+        seedId: joi.number().integer().min(1).required()  ,
+        amount:   joi.number().min(1).required()
+});
+
+
+const deladditionaiInfoValidator = joi.object({
+        userId: joi.number(),
+        seedId: joi.number().integer().min(1).required()  ,
+        title:   joi.string() 
+});
+
+const addAdditionalInfoValidator = joi.object({
+        userId:  joi.number(),
+        seedId:  joi.number().integer().min(1).required(),
+        title:   joi.string().required(),
+        content: joi.string().required(),
+});
+
+const emptyValidator = joi.object({
+        userId: joi.number().integer().min(1)    
+});
 
 const numberValidator = joi.object({
         page: joi.number().integer().min(1)    
@@ -85,6 +115,11 @@ const registrationAndAuthValidation = joi.object({
 
   
 module.exports = {
+        updateCartValidator,
+        emptyValidator,
+        addCartValidator,
+        deladditionaiInfoValidator,
+        addAdditionalInfoValidator,
         updateImgNameValidator,
         imgNameValidator,
         addCategoryToSeedValidator,
