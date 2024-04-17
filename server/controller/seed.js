@@ -27,6 +27,21 @@ class Seed {
             next(e);
         }
     }
+    async seedAllInfo(req, res, next) {
+        try {
+      
+            let {value, error} = sortSeedsValidation.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            } 
+            let query = await numberValidator.validateAsync(req.query)
+            let result = await seed.seedAllInfo(query,value);
+            return res.status(200).json(result);
+        } catch (e) {
+            next(e);
+        }
+    }
+    
     async addSeed (req,res,next){
         try{
 

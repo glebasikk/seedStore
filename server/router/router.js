@@ -39,4 +39,8 @@ router.post("/updatecart",jsonParser,authMidleware(["admin","user"]),cart.update
 router.post("/deletecart",jsonParser,authMidleware(["admin","user"]),cart.deleteCart)
 
 
+
+//////////////////
+router.post("/seedallInfo", jsonParser, seed.seedAllInfo);
+
 module.exports = router;

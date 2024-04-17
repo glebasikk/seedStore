@@ -167,7 +167,15 @@ class Seed {
         console.log(result)
         return result
     }
+    async seedAllInfo (body){
 
+        let id = body.id
+
+        id = 1
+        let result = await seed.seedByIdSpecial(id)
+        console.log(result)
+        return result
+    }
 }
     
 

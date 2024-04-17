@@ -1,7 +1,6 @@
 const seed = require("../models/seed");
-const { Op } = require('sequelize')
-
-
+const { Op,Fn  } = require('sequelize')
+const sequelize = require('sequelize')
 class Seed {
     async addSeed(name,info,price,manufdcturerId){
 
@@ -92,6 +91,19 @@ class Seed {
             limit: 3,
         });
     }
+
+
+    async seedByIdSpecial(id) {
+
+            return await seed.findOne({
+                attributes: {include:[[sequelize.literal('"static value"'), 'static_value'],[sequelize.literal('"static value"'), 'static_value1']]},
+                where: {
+                    id: id
+                },
+                
+                
+            });
+        }
     
 }
 
