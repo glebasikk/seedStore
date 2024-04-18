@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
 	id		 			INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
 	name 	 		    varchar(255)    NOT NULL,
-    priority	 		INT 			NOT NULL
+    categoryType	 	varchar(255)    NOT NULL
 );
 
 
@@ -150,21 +150,21 @@ VALUES
         
 INSERT INTO `picturies` (id,seedId,picture)
 VALUES 
-       ( 1,1,"pic1"),
-       ( 2,2,"pic2"),
-       ( 3,3,"pic3");        
+       ( 1,1,"1713438902906-1303507287_Tomato.png"),
+       ( 2,1,"1713438975545-1303507287_Tomato.png"),
+       ( 3,3,"1713438948850-1303507287_Tomato.png");        
         
-INSERT INTO `categories` (name,priority)
+INSERT INTO `categories` (name,categoryType)
 VALUES 
-       ( "category1",1),
-       ( "category2",1),
-       ( "category2(3)",1),
-	   ( "category1",2),
-       ( "category2",2),
-       ( "category2(3)",2),
-       ("Sad i Ogorod",3),
-       ("Usadba",3),
-       ("Dobronom",3);			
+       ( "тепличное","growType"),
+       ( "груновое","growType"),
+       ( "теплично-груптовое","growType"),
+	   ( "помидор","seedType"),
+       ( "огурец","seedType"),
+       ( "арбуз","seedType"),
+       ("Sad i Ogorod","provider"),
+       ("Usadba","provider"),
+       ("Dobronom","provider");			
 
 INSERT INTO `seedCategories` (seedId, categoryId)
 VALUES 
