@@ -6,6 +6,7 @@ const {
     addSeedValidation,
     updateSeedValidation,
     delSeedValidation,
+    seedCategoriesValidator,
 } = require("../midleware/validator");
 
 
@@ -29,11 +30,10 @@ class Seed {
     }
     async seedAllInfo(req, res, next) {
         try {
-            let value = req.body
-            // let {value, error} = sortSeedsValidation.validate(req.body)
-            // if (error){
-            //     return res.status(422).json(new Response("422", error.details));
-            // } 
+            let {value, error} = seedCategoriesValidator.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            } 
             let result = await seed.seedAllInfo(value);
             return res.status(200).json(result);
         } catch (e) {
@@ -52,6 +52,17 @@ class Seed {
             if(result == true){
                 return res.json(new Response("200", "Value successfully added"));
             }
+        }
+        catch(e){
+            next(e);
+        }
+    }
+    
+    async addSeedAllInfo (req,res,next){
+        try{
+
+            let result = await seed.addSeed(value);
+            return res.status(200).json(result)
         }
         catch(e){
             next(e);

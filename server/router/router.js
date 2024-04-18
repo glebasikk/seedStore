@@ -14,8 +14,8 @@ const cart = require("../controller/cart")
 
 ////////////////// Запрос на получение всей инфы из карточки товара. "seedId" обязательно
 router.post("/seedallInfo", jsonParser, seed.seedAllInfo);
-
-
+///////////////////////////////////////////////////////////
+router.post("/addseedallinfo",jsonParser, authMidleware(["admin"]),seed.addSeedAllInfo); 
 // Там где в запросе есть такая строка "authMidleware(["admin"])" удаляй ее ибо это проверка авторизациии
 router.get("/allSeed", jsonParser, seed.sortSeeds);// Простой гет запрос на все семена (чтобы выбрать страницу в пути запроса добавляй ?page="номер страницы"); Буду приводить запрос к желаемому тобой содержимому данных
 router.post("/allSeedSort", seed.sortSeeds); // запрос тот же что и выше только здесь можно отсортировать по полям "name", ""category": [1,2,3,4,5,6,7,8,9] оба поля необязательны"

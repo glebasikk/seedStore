@@ -95,7 +95,7 @@ class Seed {
 
     async seedByIdExtended(id) {
             return await seed.findOne({
-                attributes: {include:[[sequelize.literal('null'), "providers"],[sequelize.literal('"static value"'), 'static_value1']]},
+
                 where: {
                     id: id
                 },

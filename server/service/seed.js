@@ -215,6 +215,21 @@ class Seed {
         }
         return true
     }
+
+
+    async addSeedAllInfo(body){
+        let name = body.name
+        let info = body.info
+        let price = body.price
+        let result = await seed.addSeed(name,info,price)
+        if (result == null) {
+            throw new InrenalServerError("No value is created");
+        }
+        let seedId = result.dataValues.id
+        console.log(seedId)
+        return true
+    }
+
     async updateSeed(body){
         let id = body.id
         let name = body.name
@@ -257,12 +272,13 @@ class Seed {
 
         let  addadditionaiInfoResult = await addadditionaiInfoServ.additionalInfoOfCurrentSeed(body)
         tmp = []
+
         for(let i = 0; i<addadditionaiInfoResult.length; i++){
             tmp.push(addadditionaiInfoResult[i].dataValues)
         }
-        result.dataValues.addadditionaiInfo = tmp
+        result.dataValues.additionaiInfo = tmp
         if (tmp.length === 0) {
-            result.dataValues.addadditionaiInfo = null
+            result.dataValues.additionaiInfo = null
         }
 
         return result
