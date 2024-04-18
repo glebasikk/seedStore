@@ -2,6 +2,7 @@ const joi = require('joi');
 
 
 const updateCartValidator = joi.object({
+        id: joi.number().required(),
         userId: joi.number(),
         seedId: joi.number().integer().min(1),
         amount: joi.number().integer().min(1)

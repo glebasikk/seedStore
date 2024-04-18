@@ -25,7 +25,7 @@ class Picture {
                 return res.status(422).json(new Response("422", error.details));
             }
             let result = await picture.seedFirstPicture(value)
-            return res.status(200).sendFile(result);
+            return res.status(200).json(result);
             
         }catch (e) {
             next(e);

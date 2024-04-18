@@ -1,8 +1,9 @@
 const seed = require("../repository/seed");
 const category = require("../repository/category")
 const InrenalServerError = require("../errors/InrenalServerError")
-
-
+const categoryServ = require("./category")
+const pictureServ = require("./picture")
+const addadditionaiInfoServ = require("./additionalInformation")
 class Seed {
     async sortSeeds(query,body) {
         let offset = query.page 
@@ -13,9 +14,26 @@ class Seed {
         if (substr == null){
             if (categories == null || categories.length == 0){
                 let result = await seed.allSeeds(page);
+                for(let i = 0; i<result.rows.length;i++){
+
+                    let body = {seedId: result.rows[i].dataValues.id}
+
+                    let pictureResult = await pictureServ.seedFirstPicture(body)
+                    
+                    if (pictureResult == null){
+
+                        result.rows[i].dataValues.picture = null
+                    }else{
+                        console.log(pictureResult)
+                        result.rows[i].dataValues.picture = pictureResult.dataValues.picture
+                    }
+                    
+
+                }
+
                 return result
             }
-
+            
             let priorityMas = []
             let priority1 = []    
             let priority2 = []
@@ -53,8 +71,7 @@ class Seed {
             for (let i = 0; i<tmpResult.length; i++){
                 tmpMas.push(tmpResult[i].dataValues.seedId)
             }
-            console.log(priorityMas)
-            
+
 
             if(len>=1){
                 tmpResult = await category.selectedCategoriesAndSeedId(priorityMas[1],tmpMas)
@@ -75,12 +92,42 @@ class Seed {
 
             
             let result = await seed.allSeedsByCategory(page,tmpMas)
+            for(let i = 0; i<result.rows.length;i++){
+
+                let body = {seedId: result.rows[i].dataValues.id}
+
+                let pictureResult = await pictureServ.seedFirstPicture(body)
+                
+                if (pictureResult == null){
+
+                    result.rows[i].dataValues.picture = null
+                }else{
+                    console.log(pictureResult)
+                    result.rows[i].dataValues.picture = pictureResult.dataValues.picture
+                }
+                
+
+            }
             return result
 
 
         }
         if (categories == null || categories.length == 0){
             let result = await seed.allSeedsByName(page,substr);
+            for(let i = 0; i<result.rows.length;i++){
+
+                let body = {seedId: result.rows[i].dataValues.id}
+
+                let pictureResult = await pictureServ.seedFirstPicture(body)
+                
+                if (pictureResult == null){
+
+                    result.rows[i].dataValues.picture = null
+                }else{
+                    console.log(pictureResult)
+                    result.rows[i].dataValues.picture = pictureResult.dataValues.picture
+                }
+            }
             return result
         }
         let priorityMas = []
@@ -114,13 +161,12 @@ class Seed {
         }
         
         let len = priorityMas.length-1
-        console.log(len)
+
         let tmpResult = await category.selectedCategories(priorityMas[0])
         
         for (let i = 0; i<tmpResult.length; i++){
             tmpMas.push(tmpResult[i].dataValues.seedId)
         }
-        console.log(priorityMas)
         
 
         if(len>=1){
@@ -140,6 +186,22 @@ class Seed {
             
         }      
         let result = await seed.allSeedsByNameAndCategory(page,substr,tmpMas)
+        for(let i = 0; i<result.rows.length;i++){
+
+            let body = {seedId: result.rows[i].dataValues.id}
+
+            let pictureResult = await pictureServ.seedFirstPicture(body)
+            
+            if (pictureResult == null){
+
+                result.rows[i].dataValues.picture = null
+            }else{
+                console.log(pictureResult)
+                result.rows[i].dataValues.picture = pictureResult.dataValues.picture
+            }
+            
+
+        }
         return result
         
     }
@@ -164,16 +226,45 @@ class Seed {
     async delSeed(body){
         let id = body.id
         let result = await seed.delSeed(id)
-        console.log(result)
         return result
     }
     async seedAllInfo (body){
+        let seedId = body.seedId 
+        let tmp = []
+        let result = await seed.seedByIdExtended(seedId)
+        if (result == null) {
+            throw new InrenalServerError("Seed not exist");
+        }
+        let categoryResult = await categoryServ.seedCategories(body)
 
-        let id = body.id
+        for(let i = 0; i<categoryResult.length; i++){
+            tmp.push(categoryResult[i].dataValues)
+           
+        }
+        result.dataValues.categories = tmp
+        if (tmp.length === 0) {
+            result.dataValues.categories = null
+        }
+        tmp = []
+        let pictureResult = await pictureServ.seedPictures(body)
+        for(let i = 0; i<pictureResult.length; i++){
+            tmp.push(pictureResult[i].dataValues)
+        }
+        result.dataValues.pictures = tmp
+        if (tmp.length === 0) {
+            result.dataValues.pictures = null
+        }
 
-        id = 1
-        let result = await seed.seedByIdSpecial(id)
-        console.log(result)
+        let  addadditionaiInfoResult = await addadditionaiInfoServ.additionalInfoOfCurrentSeed(body)
+        tmp = []
+        for(let i = 0; i<addadditionaiInfoResult.length; i++){
+            tmp.push(addadditionaiInfoResult[i].dataValues)
+        }
+        result.dataValues.addadditionaiInfo = tmp
+        if (tmp.length === 0) {
+            result.dataValues.addadditionaiInfo = null
+        }
+
         return result
     }
 }

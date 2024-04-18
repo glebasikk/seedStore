@@ -23,10 +23,9 @@ class Picture {
         let seedId = body.seedId
         let result = await picture.seedOnePicture(seedId)
         if (result == null){
-            throw new NotFound("This seed has no pictures");
+            return null
         }
-        
-        return `${config.path}uploads/${result.dataValues.picture}`
+        return result
     }
     async downloadPicture(body){
         

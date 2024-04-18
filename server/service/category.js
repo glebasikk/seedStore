@@ -8,6 +8,7 @@ class Category {
     async seedCategories(body){
         let seedId = body.seedId
         let tmpMas = []
+    
         if(seedId == undefined){
 
         }
@@ -17,7 +18,6 @@ class Category {
         }
       
         result = await category.seedCategories(tmpMas)
-        console.log(result)
         return result
     }
 

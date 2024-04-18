@@ -12,8 +12,8 @@ const category = sequelize.define("categories", {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    priority: {
-        type: Sequelize.INTEGER,
+    categoryType: {
+        type: Sequelize.STRING,
         allowNull: false,
     }
 });
