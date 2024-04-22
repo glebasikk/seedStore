@@ -8,7 +8,7 @@ class Category {
     async seedCategories(body){
         let seedId = body.seedId
         let tmpMas = []
-    
+        
         if(seedId == undefined){
 
         }
@@ -16,7 +16,7 @@ class Category {
         for (let i = 0; i<result.length; i++){
             tmpMas.push(result[i].dataValues.categoryId)
         }
-      
+        
         result = await category.seedCategories(tmpMas)
         return result
     }
@@ -38,7 +38,8 @@ class Category {
         }
         tmp = await category.categoryById(categoryId)
         if(tmp == null){
-            throw new NotFound("Category doesn't exist");
+            // throw new NotFound("Category doesn't exist");
+            return null
         }
         tmp = await category.selectedCategoriesAndSeedId(categoryId,seedId)
 
@@ -46,6 +47,29 @@ class Category {
             throw new InrenalServerError("Coombinatin of seed and category exist");
         }
         let result = await category.addCategoryToSeed(seedId,categoryId)
+        return result
+    }
+    
+    async addCategoryToSeedExtended(body){
+        let seedId = body.seedId
+        let categoryId = body.categoryId
+        let tmp = await seed.seedById(seedId)
+        let result = []
+        if(tmp == null){
+                throw new NotFound("Seed doesn't exist");
+        }
+        for(let i = 0; i<categoryId.length; i++){
+            tmp = await category.categoryById(categoryId[i])
+            if(tmp == null){
+                
+                // throw new NotFound("Category doesn't exist");
+                result.push(null)
+            }else{
+                tmp = await category.addCategoryToSeed(seedId,categoryId[i])
+                result.push(tmp.dataValues)
+            }
+
+        }
         return result
     }
     async delConnectionSeedAndCategory(body){

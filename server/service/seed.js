@@ -221,13 +221,29 @@ class Seed {
         let name = body.name
         let info = body.info
         let price = body.price
+        let categoryId = body.categoryId
+        let title = body.title
+        let content = body.content
         let result = await seed.addSeed(name,info,price)
         if (result == null) {
             throw new InrenalServerError("No value is created");
         }
-        let seedId = result.dataValues.id
-        console.log(seedId)
-        return true
+
+        body.seedId = result.dataValues.id
+        if(categoryId == null){
+            categoryId = [0]
+        }
+        let tmp = await categoryServ.addCategoryToSeedExtended(body)
+        result.dataValues.categories = tmp
+        if(title == null || content == null){
+            title = [0]
+            content = [0]
+        }
+
+        tmp = await addadditionaiInfoServ.addAdditionalInfoExtended(body)
+        result.dataValues.additionaiInfo = tmp
+
+        return result
     }
 
     async updateSeed(body){

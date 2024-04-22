@@ -60,8 +60,8 @@ class Seed {
     
     async addSeedAllInfo (req,res,next){
         try{
-
-            let result = await seed.addSeed(value);
+            let value = req.body
+            let result = await seed.addSeedAllInfo(value);
             return res.status(200).json(result)
         }
         catch(e){

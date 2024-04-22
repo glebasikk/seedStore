@@ -14,8 +14,7 @@ const cart = require("../controller/cart")
 
 ////////////////// Запрос на получение всей инфы из карточки товара. "seedId" обязательно
 router.post("/seedallInfo", jsonParser, seed.seedAllInfo);
-///////////////////////////////////////////////////////////
-router.post("/addseedallinfo",jsonParser, authMidleware(["admin"]),seed.addSeedAllInfo); 
+
 // Там где в запросе есть такая строка "authMidleware(["admin"])" удаляй ее ибо это проверка авторизациии
 router.get("/allSeed", jsonParser, seed.sortSeeds);// Простой гет запрос на все семена (чтобы выбрать страницу в пути запроса добавляй ?page="номер страницы"); Буду приводить запрос к желаемому тобой содержимому данных
 router.post("/allSeedSort", seed.sortSeeds); // запрос тот же что и выше только здесь можно отсортировать по полям "name", ""category": [1,2,3,4,5,6,7,8,9] оба поля необязательны"
@@ -43,8 +42,16 @@ router.get("/usercart",jsonParser,authMidleware(["admin","user"]),cart.userCart)
 router.post("/updatecart",jsonParser,authMidleware(["admin","user"]),cart.updateCart)
 router.post("/deletecart",jsonParser,authMidleware(["admin","user"]),cart.deleteCart)
 
-
-
+///////////////////////////////////////////////////////////
+router.post("/addseedallinfo",jsonParser,seed.addSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
+// {
+//     "name": "cucumber1s1s",
+//     "price": 322,
+//     "categoryId": [2,3],
+//     "info": "some info",
+//     "title": ["mass", "country"],
+//     "content": [150, "China"]
+// }
 
 
 module.exports = router;
