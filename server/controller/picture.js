@@ -1,17 +1,30 @@
 const picture = require("../service/picture");
 const Response = require("../help/Response");
-const {seedCategoriesValidator, imgNameValidator, delSeedValidation,updateImgNameValidator} = require("../midleware/validator");
+const {seedCategoriesValidator, imgNameValidator, delSeedValidation,updateImgNameValidator,emptyValidator} = require("../midleware/validator");
 
 
 
 class Picture {
-    async seedPicturies(req,res,next){
+    async seedPictures(req,res,next){
         try{
             let {value, error} = seedCategoriesValidator.validate(req.body)
             if (error){
                 return res.status(422).json(new Response("422", error.details));
             }
             let result = await picture.seedPictures(value)
+            return res.status(200).json(result);
+            
+        }catch (e) {
+            next(e);
+        }
+    }
+    async allPictures(req,res,next){
+        try{
+            let {value, error} = emptyValidator.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            }
+            let result = await picture.allPictures(value)
             return res.status(200).json(result);
             
         }catch (e) {

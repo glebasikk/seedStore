@@ -12,6 +12,9 @@ class Picture {
             },
         });
     }
+    async allPictures() {
+        return await picture.findAll({});
+    }
     async pictureByName(img) {
         return await picture.count({
             

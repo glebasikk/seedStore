@@ -19,6 +19,14 @@ class Picture {
         }
         return result
     }
+    async allPictures(){
+        let result = await picture.allPictures()
+        let tmpMas = []
+        for(let i = 0; i<result.length;i++){
+            tmpMas.push(`${config.path}uploads/${result[i].dataValues.picture}`)
+        }
+        return result
+    }
     async seedFirstPicture(body){
         let seedId = body.seedId
         let result = await picture.seedOnePicture(seedId)

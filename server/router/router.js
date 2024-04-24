@@ -25,7 +25,8 @@ router.get("/listofcategories", jsonParser, category.listOfCategories); //спи
 router.post("/seedcategories", jsonParser, category.seedCategories);//список категорий привязанных к семени. "id" поле id обязательное
 router.post("/addcategorytoSeed", jsonParser,authMidleware(["admin"]), category.addCategoryToSeed);//Добавить категорию к семени к семени. "seedid", "categoryId" поля обязательны
 router.post("/delconnectionseedandcategory",authMidleware(["admin"]), jsonParser, category.delConnectionSeedAndCategory);   //Удалить связь категории и семени. "seedid", "categoryId" поля обязательны
-router.post("/seedpictures", jsonParser, picture.seedPicturies);    //список фоток пренадлежащих растению. "seedId" обязательно 
+router.get("/allpictures", jsonParser, picture.allPictures);    //список фоток пренадлежащих всем растениям
+router.post("/seedpictures", jsonParser, picture.seedPictures);    //список фоток пренадлежащих растению. "seedId" обязательно 
 router.post("/seedfirstpicture", jsonParser, picture.seedFirstPicture); //Скачать фото первое фото с сервака по "seedId"
 router.post("/downloadpicture", jsonParser, picture.downloadPicture);   // скачать фото по имени фото с сервака ""file": "1713157042497-1303507287_Tomato.png"" Вечно забываю уточнить один вопрос у тебя по этому запросу
 router.post("/addpicture", jsonParser, authMidleware(["admin"]),  upload.single("file") ,picture.addPicture); // добавить фото "form-data ->  "seedId","file"
