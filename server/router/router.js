@@ -44,7 +44,9 @@ router.post("/updatecart",jsonParser,authMidleware(["admin","user"]),cart.update
 router.post("/deletecart",jsonParser,authMidleware(["admin","user"]),cart.deleteCart)
 
 ///////////////////////////////////////////////////////////
+router.post("/mail",jsonParser,cart.mail)
 router.post("/addseedallinfo",jsonParser,seed.addSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
+router.post("/updateseedallinfo",jsonParser,seed.updateSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
 // {
 //     "name": "cucumber1s1s",
 //     "price": 322,

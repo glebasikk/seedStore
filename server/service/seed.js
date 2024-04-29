@@ -215,7 +215,47 @@ class Seed {
         }
         return true
     }
+    
 
+    async updateSeedAllInfo(body){
+        let seedId = body.seedId
+        let name = body.name
+        let info = body.info
+        let price = body.price
+        let categoryId = body.categoryId
+        let title = body.title
+        let content = body.content
+        let updateSeed = await seed.updateSeed(seedId, name,info,price)
+        if (updateSeed == null) {
+            throw new InrenalServerError("No value is updated");
+        }
+        let  result = await seed.seedById(seedId)
+        if (result == null) {
+            throw new InrenalServerError("Seed does not exist");
+        }
+
+
+
+        if(categoryId == null){
+            categoryId = [0]
+        }
+
+        await categoryServ.delConnectionSeedAndCategoryBySeedId(body)
+        let tmp = await categoryServ.addCategoryToSeedExtended(body)
+        result.dataValues.categories = tmp
+
+        if(title == null || content == null){
+            title = [0]
+            content = [0]
+        }
+
+        await addadditionaiInfoServ.delAdditionalInfoBySeedId(body)
+        tmp = await addadditionaiInfoServ.addAdditionalInfoExtended(body)
+
+        result.dataValues.additionaiInfo = tmp
+
+        return result
+    }
 
     async addSeedAllInfo(body){
         let name = body.name

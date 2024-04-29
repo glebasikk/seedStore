@@ -72,7 +72,13 @@ class Category {
         }
         return result
     }
+    async delConnectionSeedAndCategoryBySeedId(body){
+        let seedId = body.seedId
+        let result = await category.delConnectionSeedAndCategoryBySeedId(seedId)
+        return result
+    }
     async delConnectionSeedAndCategory(body){
+
         let seedId = body.seedId
         let categoryId = body.categoryId
         let tmp = await seed.seedById(seedId)

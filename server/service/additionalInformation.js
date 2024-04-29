@@ -40,6 +40,11 @@ class AdditionalInformation {
         let result = await additionalInformation.delAdditionalInfoBySeedIdAndTitle(seedId,title)
         return result
     }
+    async delAdditionalInfoBySeedId(body){
+        let seedId = body.seedId
+        let result = await additionalInformation.delAdditionalInfoBySeedId(seedId)
+        return result
+    }
 
 }
 

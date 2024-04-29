@@ -1,5 +1,6 @@
 DROP DATABASE IF EXISTS	seed;
-CREATE DATABASE seed DEFAULT CHARACTER SET utf16;
+#CREATE DATABASE seed DEFAULT CHARACTER SET сp1251;
+create database `seed` default charset cp1251;
 
 USE seed;
 

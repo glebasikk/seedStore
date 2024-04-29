@@ -9,6 +9,29 @@ const updateCartValidator = joi.object({
 
 });
 
+
+const updateSeedAllInfo = joi.object({
+        seedId: joi.number().required(),
+        userId: joi.number(),
+        name: joi.string().required(),
+        price: joi.number().required(),
+        info: joi.string(), 
+        categoryId: joi.array().required(),
+        title:   joi.array().required(),
+        content: joi.array().required(), 
+});
+
+
+const addSeedAllInfo = joi.object({
+        userId: joi.number(),
+        name: joi.string().required(),
+        price: joi.number().required(),
+        info: joi.string(), 
+        categoryId: joi.array().required(),
+        title:   joi.array().required(),
+        content: joi.array().required(), 
+});
+
 const addCartValidator = joi.object({
         userId: joi.number(),
         seedId: joi.number().integer().min(1).required()  ,
@@ -116,6 +139,8 @@ const registrationAndAuthValidation = joi.object({
 
   
 module.exports = {
+        updateSeedAllInfo,
+        addSeedAllInfo,
         updateCartValidator,
         emptyValidator,
         addCartValidator,
@@ -134,4 +159,5 @@ module.exports = {
         filteredMeetings,
         registrationAndAuthValidation,
         addGuestValidator,
+
 }

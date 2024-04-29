@@ -48,6 +48,14 @@ class Category {
             }
         })
     }
+    
+    async delConnectionSeedAndCategoryBySeedId (seedId){
+        return await seedCategory.destroy({
+            where: {
+                seedId: seedId
+            }
+        })
+    }
 
     async addCategoryToSeed (seedId, categoryId){
         return await seedCategory.create({

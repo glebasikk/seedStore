@@ -1,12 +1,38 @@
 const cart = require("../service/cart");
 const Response = require("../help/Response");
 const {sortSeedsValidation,numberValidator,seedCategoriesValidator,addCartValidator,emptyValidator, delSeedValidation} = require("../midleware/validator");
-
+const nodemailer = require('nodemailer');
 
 
 
 
 class Cart {
+    async mail (req,res,next){
+
+
+        
+        let testEmailAccount = await nodemailer.createTestAccount();
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: "seedstrore@gmail.com",
+                pass: "administrator!1",
+            },
+        });
+        let result = await transporter.sendMail({
+            from: "seedstrore@gmail.com",
+            to: "seedstrore@gmail.com",
+            subject: 'Message from Node js',
+            text: 'This message was sent from Node js server.',
+            html:
+                'This <i>message</i> was sent from <strong>Node js</strong> server.',
+        });
+        console.log(result);
+        return result
+
+    }
+
+
     async addCart(req, res, next) {
         try {
 
