@@ -1,34 +1,41 @@
 const cart = require("../service/cart");
 const Response = require("../help/Response");
-const {sortSeedsValidation,numberValidator,seedCategoriesValidator,addCartValidator,emptyValidator, delSeedValidation} = require("../midleware/validator");
+const {addCartValidator,emptyValidator, delSeedValidation,mailValidator} = require("../midleware/validator");
 const nodemailer = require('nodemailer');
-
+const config = require("../config")
 
 
 
 class Cart {
+
     async mail (req,res,next){
+        try {
+            let {value, error} = mailValidator.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            }
+            let letter = await cart.Mail(value)
+            
+            
+            let testEmailAccount = await nodemailer.createTestAccount();
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: config.user,
+                    pass: config.pass,
+                },
+            });
+            let result = await transporter.sendMail({
+                from: "seedstrore@gmail.com",
+                to: "seedstrore@gmail.com",
+                subject: 'Новый заказ',
+                text: letter,
+            })
+            return res.status(200).json(new Response("200", result));
+        } catch (e) {
+            next(e);
+        }
 
-
-        
-        let testEmailAccount = await nodemailer.createTestAccount();
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: "seedstrore@gmail.com",
-                pass: "administrator!1",
-            },
-        });
-        let result = await transporter.sendMail({
-            from: "seedstrore@gmail.com",
-            to: "seedstrore@gmail.com",
-            subject: 'Message from Node js',
-            text: 'This message was sent from Node js server.',
-            html:
-                'This <i>message</i> was sent from <strong>Node js</strong> server.',
-        });
-        console.log(result);
-        return result
 
     }
 

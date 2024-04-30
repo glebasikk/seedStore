@@ -45,16 +45,17 @@ router.post("/deletecart",jsonParser,authMidleware(["admin","user"]),cart.delete
 
 ///////////////////////////////////////////////////////////
 router.post("/mail",jsonParser,cart.mail)
+// {
+//     "paymentMethod": "Наличные",
+//     "deliveryMethod": "Курьер",
+//     "phone": "+70898765432",
+//     "username": "Иван",
+//     "amount": [3,2],
+//     "seedId": [1,2]
+// }
 router.post("/addseedallinfo",jsonParser,seed.addSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
 router.post("/updateseedallinfo",jsonParser,seed.updateSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
-// {
-//     "name": "cucumber1s1s",
-//     "price": 322,
-//     "categoryId": [2,3],
-//     "info": "some info",
-//     "title": ["mass", "country"],
-//     "content": [150, "China"]
-// }
+
 
 
 module.exports = router;

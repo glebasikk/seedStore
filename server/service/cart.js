@@ -6,6 +6,54 @@ const NotFound = require("../errors/NotFound");
 const Forbidden = require("../errors/Forbidden");
 
 class Cart {
+    async Mail (body){
+        let paymentMethod = body.paymentMethod
+        let deliveryMethod = body.deliveryMethod
+        let phone = body.phone
+        let seedId = body.seedId
+        let username = body.username
+        let amount = body.amount
+        let totalPrice = 0
+        let result = []
+        let str = ``
+        if (seedId.length != amount.length){
+            throw new Forbidden("Incorrect input values");
+        }
+        // for (let i = 0; i<seedId.length; i++){
+        //     let data = await seed.seedById(seedId[i])
+        //     if (data == null) {
+        //         throw new NotFound("Seed  does not exist");
+        //     }
+        //     result[i]={
+        //         "Название": data.dataValues.name,
+        //         "Колличество": amount[i],
+        //         "Цена за единицу товара": data.dataValues.price,
+        //         "Цена товара с учетом колличества": data.dataValues.price*amount[i]
+                
+        //     }
+        //     totalPrice += amount[i]*data.dataValues.price 
+        // }
+        // result.push({"Общая сумма заказа": totalPrice,"имя пользователя": username, "Номер телефона": phone, "Способ доставки": deliveryMethod, "Способ оплаты": paymentMethod})
+        // return "222"
+        for (let i = 0; i<seedId.length; i++){
+            let data = await seed.seedById(seedId[i])
+            if (data == null) {
+                throw new NotFound("Seed  does not exist");
+            }
+            str +=`"Название": ${data.dataValues.name},
+                   "Колличество": ${amount[i]},
+                   "Цена за единицу товара": ${data.dataValues.price},
+                   "Цена товара с учетом колличества": ${data.dataValues.price*amount[i]} \n\n`
+
+                
+  
+            totalPrice += amount[i]*data.dataValues.price 
+        }
+        str +=`Общая сумма заказа: ${totalPrice} \n, Имя пользователя: ${username}\n, Номер телефона: ${phone}\n, Способ доставки: ${deliveryMethod}\n, Способ оплаты: ${paymentMethod}`
+        return str
+    }
+
+
     async allBaskets() {
         return await cart.allBaskets();
     }

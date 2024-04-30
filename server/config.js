@@ -1,6 +1,8 @@
 let config = {
     path:'D:/seedStore/server/',
-    secret: "secret"
+    secret: "secret",
+    user: "seedstrore@gmail.com",
+    pass: "hpkqvzmbklfthhvs",
 }
 
 module.exports = config

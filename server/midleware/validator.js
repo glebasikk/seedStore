@@ -9,6 +9,15 @@ const updateCartValidator = joi.object({
 
 });
 
+const mailValidator = joi.object({
+        paymentMethod: joi.string().required(),
+        deliveryMethod: joi.string().required(),
+        phone: joi.string().required(),
+        username: joi.string().required(),
+        amount: joi.array().required(),
+        seedId: joi.array().required(),
+});
+
 
 const updateSeedAllInfo = joi.object({
         seedId: joi.number().required(),
@@ -139,6 +148,7 @@ const registrationAndAuthValidation = joi.object({
 
   
 module.exports = {
+        mailValidator,
         updateSeedAllInfo,
         addSeedAllInfo,
         updateCartValidator,
