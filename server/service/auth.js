@@ -16,6 +16,22 @@ class Auth {
         data.userRole = "admin"
         return await userRepo.addUser(data);
     }
+    async changePassword(data) {
+        if ((await userRepo.findUserByUsername(data.username)) == null) {
+            throw new NotFound("user does not exist");
+        }
+        const user = await userRepo.findUserByUsername(data.username);
+        const validPassword = bcrypt.compareSync(data.password, user.password);
+        if (!validPassword) {
+            throw new Unauthorized("Incorrect password");
+        }
+        data.newPassword = bcrypt.hashSync(data.newPassword, 5);
+        let result = await userRepo.changePassword(data);
+        if (result[0] > 0){
+            return true
+        }
+        return false
+    }
     async login(data) {
         if ((await userRepo.findUserByUsername(data.username)) == null) {
             throw new NotFound("user does not exist");

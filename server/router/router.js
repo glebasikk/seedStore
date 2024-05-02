@@ -5,7 +5,9 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json()
 const picture = require("../controller/picture")
+const catalog = require("../controller/catalog")
 const upload = require("../midleware/upload")
+const uploadCatalog = require("../midleware/uploadCatatlog")
 const additionalInfoOfCurrentSeed = require("../controller/additionalInformation")
 const auth = require("../controller/auth")
 const authMidleware = require("../midleware/auth");
@@ -38,12 +40,13 @@ router.post("/deladditionaiInfo", jsonParser, authMidleware(["admin"]), addition
 router.post("/registration",jsonParser, auth.registration); //Хз надо ли но без этого не добавить ни одного пользователя (вообще никак, даже добавляя в sql) по умолчанию role:admin. "username", "password" //Закащик просил добавить смену пароля для админа что я собственно забыл и сделать и сказакть 
 router.post("/auth",jsonParser, auth.login); //"Авторизация". "username", "password" ответ будет ключ авторизации для cookies. чтобы не мучаться можежб ввести этот: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsInR5cGUiOiJBY2Nlc3MiLCJpYXQiOjE3MTMxNjkxNDEsImV4cCI6MTc5OTU2OTE0MX0.92zlmsmwYdd1XzPQlU_YXhPmWs5tFOwYG_bSjevgz94
 router.get( "/addsession", auth.session) //Это для сохранения сессии. Я тут подумал если можно легко это сделать на твоей стороне то лучше так и посткпить. пока сама не решишь как делать в запросы ниже нелезь
-router.post("/addcart",jsonParser,authMidleware(["admin","user"]),cart.addCart)
-router.get("/usercart",jsonParser,authMidleware(["admin","user"]),cart.userCart)
-router.post("/updatecart",jsonParser,authMidleware(["admin","user"]),cart.updateCart)
-router.post("/deletecart",jsonParser,authMidleware(["admin","user"]),cart.deleteCart)
-
-///////////////////////////////////////////////////////////
+router.post( "/changepassword", auth.changePassword) //Смена пароля, поля теже что и при регистрации + newPassword
+router.post("/downloadcatalog", jsonParser, catalog.downloadCatalog); // файл по id скачать
+router.post("/addfile", jsonParser, authMidleware(["admin"]),  uploadCatalog.single("file"), catalog.addFile ); // добавить файл "form-data ->  "id","file"
+// router.post("/addcart",jsonParser,authMidleware(["admin","user"]),cart.addCart)
+// router.get("/usercart",jsonParser,authMidleware(["admin","user"]),cart.userCart)
+// router.post("/updatecart",jsonParser,authMidleware(["admin","user"]),cart.updateCart)
+// router.post("/deletecart",jsonParser,authMidleware(["admin","user"]),cart.deleteCart)
 router.post("/mail",jsonParser,cart.mail)
 // {
 //     "paymentMethod": "Наличные",
@@ -55,6 +58,9 @@ router.post("/mail",jsonParser,cart.mail)
 // }
 router.post("/addseedallinfo",jsonParser,seed.addSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
 router.post("/updateseedallinfo",jsonParser,seed.updateSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
+
+
+
 
 
 

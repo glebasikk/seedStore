@@ -145,9 +145,16 @@ const registrationAndAuthValidation = joi.object({
         password: joi.string().required()    
 });
 
+const changePasswordValidation = joi.object({
+        username: joi.string().required(),
+        password: joi.string().required(),
+        newPassword: joi.string().required()
+});
+
 
   
 module.exports = {
+        changePasswordValidation,
         mailValidator,
         updateSeedAllInfo,
         addSeedAllInfo,

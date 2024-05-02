@@ -5,7 +5,6 @@ class User {
         return await user.findOne({ where: { username: username } });
     }
     async findUserById(id) {
-        console.log(id)
         return await user.findOne({
              where: {
                  id: id 
@@ -19,6 +18,20 @@ class User {
             role: data.userRole,
         });
     }
+    async changePassword(data) {
+            return await user.update(
+                {
+                    password:data.newPassword
+                },
+                {
+                    where:{
+                        username: data.username
+                    }
+                }
+    
+            )
+        }
+
 }
 
 module.exports = new User();
