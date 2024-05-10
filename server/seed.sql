@@ -43,6 +43,12 @@ CREATE TABLE picturies (
     picture				varchar(255) 	NOT NULL
 );
 
+DROP TABLE IF EXISTS catalogs;
+CREATE TABLE catalogs (
+	id		 			INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
+    catalog				varchar(255) 	NOT NULL
+);
+
 DROP TABLE IF EXISTS seeds;
 CREATE TABLE seeds (
 	id		 			INT 			    NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
@@ -160,12 +166,59 @@ VALUES
        ( "тепличное","growType"),
        ( "груновое","growType"),
        ( "теплично-груптовое","growType"),
-	   ( "помидор","seedType"),
-       ( "огурец","seedType"),
-       ( "арбуз","seedType"),
+       
+	   ( "Огурцы детерминантные","seedType"),
+       ( "Огурцы индетерминантные","seedType"),
+       ( "Томат","seedType"),
+       ( "Рукола","seedType"),
+       ( "Баклажан","seedType"),
+       ( "Кабачок","seedType"),
+       ( "Тыква","seedType"),
+       ( "Капуста белокочанная поздняя","seedType"),
+       ( "Капуста белокочанная средне-поздняя","seedType"),
+       ( "Капуста белокочанная ранняя","seedType"),
+       ( "Сельдерей","seedType"),
+       ( "Лук батун","seedType"),
+       ( "Лук репчатый ","seedType"),
+       ( "Петрушка","seedType"),
+       ( "Укроп","seedType"),
+       ( "Шпинат","seedType"),
+       ( "Кориандр","seedType"),
+       ( "Щавель","seedType"),
+       ( "Редис","seedType"),
+       ( "Редька","seedType"),
+       ( "Мангольд","seedType"),
+       ( "Свёкла","seedType"),
+       ( "Морковь","seedType"),
+       ( "Салаты","seedType"),
+       ( "Брокколи","seedType"),
+       ( "Цветная капуста","seedType"),
+       ( "Капуста пекинская ","seedType"),
+	   ( "Перец","seedType"),
+	   ( "Арбуз","seedType"),
+	   ( "Дыня","seedType"),
+       ( "Подвои","seedType"),
+       ( "Кукуруза","seedType"),
+       ( "Патиссон","seedType"),
        ("Sad i Ogorod","provider"),
        ("Usadba","provider"),
-       ("Dobronom","provider");			
+       ("Dobronom","provider"),	
+       ("Sakata","provider"),	
+	   ("Greenomica","provider"),
+       ("Агрофирма поиск","provider"),
+       ("Vilmorin","provider"),
+       ("Maraldi","provider"),
+       ("May","provider"),
+	   ("Clause","provider"),
+       ("Enza Zaden","provider"),
+       ("Semo","provider"),
+       ("Seminis","provider"),
+       ("Singenta","provider"),
+       ("Nunhems","provider"),
+       ("Bejo","provider"),
+       ("Rijk Zwaan","provider");
+
+ 
 
 INSERT INTO `seedCategories` (seedId, categoryId)
 VALUES 
@@ -188,6 +241,10 @@ VALUES
        ( 3,"topic5","info5"),
        ( 3,"topic6","info6");  
 
+INSERT INTO `catalogs` (id, catalog)
+VALUES 
+       ( 1,"1714628175303-1.txt"),
+       ( 2,"1714629211217-2910_Switch_Management_and_Configuration_Guide.pdf")
 
 
 
