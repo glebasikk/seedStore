@@ -42,6 +42,7 @@ router.post("/auth",jsonParser, auth.login); //"Авторизация". "userna
 router.get( "/addsession", auth.session) //Это для сохранения сессии. Я тут подумал если можно легко это сделать на твоей стороне то лучше так и посткпить. пока сама не решишь как делать в запросы ниже нелезь
 router.post( "/changepassword", auth.changePassword) //Смена пароля, поля теже что и при регистрации + newPassword
 router.post("/downloadcatalog", jsonParser, catalog.downloadCatalog); // файл по id скачать
+router.get("/allfiles", jsonParser, catalog.allFiles); // файл по id скачать
 router.post("/delfile", jsonParser, authMidleware(["admin"]), catalog.delCatalog); // файл по id скачать
 router.post("/addfile", jsonParser, authMidleware(["admin"]),  uploadCatalog.single("file"), catalog.addFile ); // добавить файл "form-data ->  "id","file"
 // router.post("/addcart",jsonParser,authMidleware(["admin","user"]),cart.addCart)

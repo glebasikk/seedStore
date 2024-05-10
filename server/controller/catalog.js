@@ -1,10 +1,22 @@
 const catalog = require("../service/catalog");
 const Response = require("../help/Response");
-const {delSeedValidation} = require("../midleware/validator");
+const {delSeedValidation,emptyValidator} = require("../midleware/validator");
 
 
 
 class Catalog {
+    async allFiles (req, res,next){
+        try{
+            let {value, error} = emptyValidator.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            }
+            let result = await catalog.allFiles()
+            return res.status(200).json(result);
+        }catch (e) {
+            next(e);
+        }
+    }
     async addFile (req, res,next){
         try{
             let {value, error} = delSeedValidation.validate(req.body)

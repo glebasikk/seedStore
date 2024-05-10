@@ -9,6 +9,9 @@ class Catalog {
             catalog:filename
         })
     }
+    async allFiles(){
+        return await catalog.findAll({})
+    }
     async delFile(id){
         return await catalog.destroy({
             where:{

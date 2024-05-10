@@ -13,6 +13,10 @@ class Catalog {
         let result = await catalog.addFile(id,filename)
         return result
     }
+    async allFiles(){
+        let result = await catalog.allFiles()
+        return result
+    }
     async delFile(body){
         let id = body.id
         let result = await catalog.fileById(id)
