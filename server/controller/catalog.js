@@ -29,6 +29,18 @@ class Catalog {
             next(e);
         }
     }
+    async delCatalog(req,res,next){
+        try{
+            let {value, error} = delSeedValidation.validate(req.body)
+            if (error){
+                return res.status(422).json(new Response("422", error.details));
+            }
+            let result = await catalog.delFile(value)
+            return res.status(200).json(new Response("200", "Catalog successfully deleted"));
+        }catch (e) {
+            next(e);
+        }
+    }
 }
 
 

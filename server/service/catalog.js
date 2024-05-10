@@ -9,13 +9,14 @@ class Catalog {
     async addFile(body,file){
         let id = body.id
         let filename = file.filename
-        this.delPicture(body)
+        await this.delFile(body)
         let result = await catalog.addFile(id,filename)
         return result
     }
-    async delPicture(body){
+    async delFile(body){
         let id = body.id
-        let result = await catalog.delFile(id)
+        let result = await catalog.fileById(id)
+        result = await catalog.delFile(id)
         return result
     }
         async downloadFile(body){
