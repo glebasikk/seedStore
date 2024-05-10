@@ -142,6 +142,22 @@ VALUES
        ( "bean","info3",228),
        ( "white tomat","info4",228),
        ( "melon","info2",333),
+		( "tomat","info1",228),
+		( "tomat","info1",228),
+		( "tomat","info1",228),
+		( "tomat","info1",228),
+		( "tomat","info1",228),
+		( "tomat","info1",228),
+		( "tomat","info1",228),
+		( "tomat","info1",228),
+        ( "tomat","info1",228),
+        ( "tomat","info1",228),
+        ( "tomat","info1",228),
+        ( "tomat","info1",228),
+        ( "tomat","info1",228),
+        ( "tomat","info1",228),
+        ( "tomat","info1",228),
+        ( "tomat","info1",228),
        ( "pepper","info5",228);
            
 INSERT INTO `orders` (number, totalPrice)
