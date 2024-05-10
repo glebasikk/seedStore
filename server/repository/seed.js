@@ -39,7 +39,7 @@ class Seed {
     async allSeeds(page) {
         return await seed.findAndCountAll({
             offset: page,
-            limit: 3,
+            limit: 10,
         });
     }
 
