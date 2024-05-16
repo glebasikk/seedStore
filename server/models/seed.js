@@ -13,7 +13,7 @@ const seed = sequelize.define("seeds", {
         allowNull: false,
     },
     info: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
     },
     price: {

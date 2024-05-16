@@ -73,11 +73,11 @@ class Category {
     }
 
 
-    async priority(id,priority){
+    async priority(id,categoryType){
 
         return await category.findAll({
             where:{
-                priority: priority,
+                categoryType: categoryType,
                 id: id
             }
         })

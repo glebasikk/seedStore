@@ -41,8 +41,8 @@ router.post("/registration",jsonParser, auth.registration); //Хз надо ли
 router.post("/auth",jsonParser, auth.login); //"Авторизация". "username", "password" ответ будет ключ авторизации для cookies. чтобы не мучаться можежб ввести этот: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsInR5cGUiOiJBY2Nlc3MiLCJpYXQiOjE3MTMxNjkxNDEsImV4cCI6MTc5OTU2OTE0MX0.92zlmsmwYdd1XzPQlU_YXhPmWs5tFOwYG_bSjevgz94
 router.get( "/addsession", auth.session) //Это для сохранения сессии. Я тут подумал если можно легко это сделать на твоей стороне то лучше так и посткпить. пока сама не решишь как делать в запросы ниже нелезь
 router.post( "/changepassword", auth.changePassword) //Смена пароля, поля теже что и при регистрации + newPassword
-router.post("/downloadcatalog", jsonParser, catalog.downloadCatalog); // файл по id скачать
-router.get("/allfiles", jsonParser, catalog.allFiles); // файл по id скачать
+router.post("/downloadcatalog", jsonParser, catalog.downloadCatalog); 
+router.get("/allfiles", jsonParser, catalog.allFiles); 
 router.post("/delfile", jsonParser, authMidleware(["admin"]), catalog.delCatalog); // файл по id скачать
 router.post("/addfile", jsonParser, authMidleware(["admin"]),  uploadCatalog.single("file"), catalog.addFile ); // добавить файл "form-data ->  "id","file"
 // router.post("/addcart",jsonParser,authMidleware(["admin","user"]),cart.addCart)

@@ -7,10 +7,9 @@ let fs = require('fs');
 
 class Catalog {
     async addFile(body,file){
-        let id = body.id
         let filename = file.filename
-        await this.delFile(body)
-        let result = await catalog.addFile(id,filename)
+        //await this.delFile(body)
+        let result = await catalog.addFile(filename)
         return result
     }
     async allFiles(){

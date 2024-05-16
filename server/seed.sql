@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS seeds;
 CREATE TABLE seeds (
 	id		 			INT 			    NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
     name				varchar(255)        NOT NULL,
-    info				varchar(255),        
+    info				TEXT,        
     price               INT
 );
 

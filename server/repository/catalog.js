@@ -3,9 +3,8 @@ const { Op } = require('sequelize')
 
 
 class Catalog {
-    async addFile(id,filename){
+    async addFile(filename){
         return await catalog.create({
-            id:id,
             catalog:filename
         })
     }

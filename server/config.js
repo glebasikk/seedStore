@@ -1,5 +1,5 @@
 let config = {
-    path:'D:/seedStore/server/',
+    path:'C:/seedStore/server/',
     secret: "secret",
     user: "seedstrore@gmail.com",
     pass: "hpkqvzmbklfthhvs",

@@ -19,7 +19,7 @@ class Catalog {
     }
     async addFile (req, res,next){
         try{
-            let {value, error} = delSeedValidation.validate(req.body)
+            let {value, error} = emptyValidator.validate(req.body)
             if (error){
                 return res.status(422).json(new Response("422", error.details));
             }
@@ -36,7 +36,7 @@ class Catalog {
                 return res.status(422).json(new Response("422", error.details));
             }
             let result = await catalog.downloadFile(value)
-            return res.status(200).sendFile(result);
+            return res.status(200).download(result);
         }catch (e) {
             next(e);
         }

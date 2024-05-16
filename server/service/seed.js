@@ -38,16 +38,19 @@ class Seed {
             let priority1 = []    
             let priority2 = []
             let priority3 = []
+
             for (let i = 0; i<categories.length; i++){
-                let priority = await category.priority(categories[i],1)
+                
+                let priority = await category.priority(categories[i],"growType")
+
                 if (priority.length != 0){
                     priority1.push(priority[0].dataValues.id)
                 }
-                priority = await category.priority(categories[i],2)
+                priority = await category.priority(categories[i],"seedType")
                 if (priority.length != 0){
                     priority2.push(priority[0].dataValues.id)
                 }
-                priority = await category.priority(categories[i],3)
+                priority = await category.priority(categories[i],"provider")
                 if (priority.length != 0){
                     priority3.push(priority[0].dataValues.id)
                 }
@@ -135,15 +138,15 @@ class Seed {
         let priority2 = []
         let priority3 = []
         for (let i = 0; i<categories.length; i++){
-            let priority = await category.priority(categories[i],1)
+            let priority = await category.priority(categories[i],"growType")
             if (priority.length != 0){
                 priority1.push(priority[0].dataValues.id)
             }
-            priority = await category.priority(categories[i],2)
+            priority = await category.priority(categories[i],"seedType")
             if (priority.length != 0){
                 priority2.push(priority[0].dataValues.id)
             }
-            priority = await category.priority(categories[i],3)
+            priority = await category.priority(categories[i],"provider")
             if (priority.length != 0){
                 priority3.push(priority[0].dataValues.id)
             }
@@ -209,6 +212,7 @@ class Seed {
         let name = body.name
         let info = body.info
         let price = body.price
+        console.log(name,info,price)
         let result = await seed.addSeed(name,info,price)
         if (result == null) {
             throw new InrenalServerError("No value is created");

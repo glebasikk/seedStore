@@ -67,7 +67,7 @@ class Seed {
                 }
             },
             offset: page,
-            limit: 3,
+            limit: 10,
         });
     }
     async allSeedsByCategory(page,seedId) {
@@ -76,7 +76,7 @@ class Seed {
                 id: seedId
             },
             offset: page,
-            limit: 3,
+            limit: 10,
         });
     }
     async allSeedsByNameAndCategory(page,substring,seedId) {
@@ -88,7 +88,7 @@ class Seed {
                 id: seedId
             },
             offset: page,
-            limit: 3,
+            limit: 10,
         });
     }
 

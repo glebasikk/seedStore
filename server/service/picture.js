@@ -47,22 +47,25 @@ class Picture {
     async addPicture(body,file){
         let seedId = body.seedId
         let filename = file.filename
+        console.log(seedId,filename)
         let checkSeed = await seed.seedExist(seedId)
+        console.log(seedId,filename)
         if (checkSeed <= 0){
             fs.unlink(`./uploads/${filename}`, err => {
                 if(err) throw err;
              });
              throw new NotFound("File doesn't exist");
         }
+
         let result = await picture.addPicture(seedId,filename)
         return result
     }
     async delPicture(body){
         let id = body.id
         let checkPicture = await picture.pictureExist(id)
-        if (checkPicture == 0){
-            throw new NotFound("Picture doesn't exist");
-        }
+        // if (checkPicture == 0){
+        //     throw new NotFound("Picture doesn't exist");
+        // }
         let result = await picture.delPicture(id)
         return result
     }
