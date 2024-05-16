@@ -1,0 +1,65 @@
+.admin-header{
+    width: 100%;
+    
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.for-admin{
+    font-size: 24px;
+}
+.admin-pannel{
+    margin-top: 20px;
+    padding:30px;
+    display: flex;
+}
+.upload-pics{
+    width:300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.admin-pannel-child{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+}
+.admin-pannel-inputs{
+    display: flex;
+}
+.admin-pannel-inputs-child{
+    width:50%;
+}
+.chars{
+    font-size: 18px;
+}
+
+.old-images{
+    display: grid;
+    gap: 20px;
+    /* ! */
+    grid-template-columns: 100px 100px 100px;
+}
+.old-images-child{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.del-image{
+    height: 100px;
+    width:100px;
+    object-fit: cover;
+}
+
+@media (max-width: 1220px) { 
+    .admin-pannel{
+        flex-direction: column;
+    }
+    .admin-pannel-child{
+        width:100%;
+    }
+    .admin-pannel-inputs{
+        flex-direction: column;
+    }
+   }

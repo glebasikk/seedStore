@@ -1,0 +1,28 @@
+.carousel-image{
+    object-fit: cover;  
+    min-width: 977px;
+    height: 450px;
+    
+}
+.image-delete-button{
+  display:flex;
+  justify-content: center;
+  background-color: #16642C;
+  align-items: center;
+  gap:10px;
+  color:white;
+}
+.slider{
+    display:flex;
+}
+.hide{
+    display:none;
+}
+@media (max-width: 1220px) { 
+    .carousel-image{
+        object-fit: cover;  
+        min-width:100vw;
+        height: 300px;
+        
+    }
+}

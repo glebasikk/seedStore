@@ -1,38 +1,169 @@
+/* Reset and base styles  */
+* {
+	padding: 0px;
+	margin: 0px;
+	border: none;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Links */
+
+a, a:link, a:visited  {
+    text-decoration: none;
+}
+
+a:hover  {
+    text-decoration: none;
+}
+
+/* Common */
+
+aside, nav, footer, header, section, main {
+	display: block;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    font-size: inherit;
+	font-weight: inherit;
+}
+
+ul, ul li {
+	list-style: none;
+}
+
+img {
+	vertical-align: top;
+}
+
+img{
+	max-width: 100%;
+	height: auto;
+}
+
+address {
+  font-style: normal;
+}
+
+/* Form */
+
+
+
+
+
+button, input[type="submit"] {
+    display: inline-block;
+    box-shadow: none;
+    background-color: transparent;
+    background: none;
+    cursor: pointer;
+}
+
+
+
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+
+label {
+	cursor: pointer;
+}
+
+legend {
+	display: block;
+}
+
+
+
+body{
+  background-color: #EFF0EE;
+}
 .App {
   text-align: center;
+  
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
+.wrapper{
+  display:flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+}
+.container{
+  width: 1220px;
+  background-color: white;
+}
+
+.button{
+  background-color: #16642C;
+  color:#FFFFFF;
+  text-decoration: none;
+  padding:10px;
+  border-radius: 5px;
+}
+
+.flex{
+  margin-top: 80px;
+  display:flex;
+  box-shadow: 0 10px 10px rgba(170, 170, 170, 0.75);
+}
+.add-pic-background{
+  background-color: #FFFFFF;
+  color:#FFFFFF
+}
+.add-pic{
+  display:flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-left:243px;
+  background-color: #16642C;
+  align-items: center;
+  gap:10px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* W3C standard
+   сейчас только для Firefox */
+   * {
+    scrollbar-width:thin;
+    scrollbar-color: #16642C rgb(240, 240, 240);
   }
-  to {
-    transform: rotate(360deg);
+  
+  /* для Chrome/Edge/Safari */
+  *::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    border-radius: 5px;
   }
+  *::-webkit-scrollbar-track {
+    background: rgb(240, 240, 240);
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #16642C;
+    border-radius: 4px;
+    
+  }
+  .styled-scrollbars::-webkit-scrollbar {
+    width: 4px; /* в основном для вертикальных полос прокрутки */
+    height: 4px; /* в основном для горизонтальных полос прокрутки */
+  }
+.upload-files{
+  display:flex;
+  margin-top: 80px;
+  align-items: center;
+  justify-content: center;
 }
+@media (max-width: 1220px) { 
+  .container{
+    width: 100%;
+  }
+  .flex{
+    margin-top: 0px;
+    flex-direction: column-reverse;
+  }
+  .add-pic{
+    margin-left: auto;
+  }
+ }

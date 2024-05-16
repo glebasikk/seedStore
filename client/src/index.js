@@ -3,11 +3,31 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+import state from "./state.js";
+import { red } from '@mui/material/colors';
+import $ from 'jquery';
+
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 2000,
+  offset: '30px',
+  // you can also just use 'scale'
+  transition: transitions.FADE,
+  containerStyle: {
+    zIndex: 10000,
+  }
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    
+    <AlertProvider template={AlertTemplate} {...options}>
+    <App state={state}/>
+    </AlertProvider>
   </React.StrictMode>
 );
 
