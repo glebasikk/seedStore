@@ -19,7 +19,7 @@ const theme = createTheme({
 export default function ChangePassword() {
   const alert = useAlert()
   const auth=async(username,password,newPassword) => {
-    const request= await fetch('/changepassword', {
+    const request= await fetch('http://31.128.38.67:5000/changepassword', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

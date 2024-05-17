@@ -70,7 +70,7 @@ const Cart = (props) => {
     let userPhone = document.getElementById("userPhone").value;
     let id=props.cart.map(x=>x.id)
     let amount= props.cart.map(x=>x.amount)
-    let req=await fetch("/mail", {
+    let req=await fetch("http://31.128.38.67:5000/mail", {
       method: "POST",
       headers: {
         Accept: "application/json",

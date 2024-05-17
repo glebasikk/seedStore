@@ -108,7 +108,7 @@ const AddForm = (props) => {
 
 
   const fetchProduct = async () => {
-    const request = await fetch("/seedallInfo", {
+    const request = await fetch("http://31.128.38.67:5000/seedallInfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -135,7 +135,7 @@ const AddForm = (props) => {
   };
 
   const getPics = async () => {
-    const request = await fetch("/seedpictures", {
+    const request = await fetch("http://31.128.38.67:5000/seedpictures", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -151,7 +151,7 @@ const AddForm = (props) => {
     let picNames = content.map((x) => x.picture);
     let pictures = [];
     for (let i = 0; i < content.length; i++) {
-      const res = await fetch("/downloadpicture", {
+      const res = await fetch("http://31.128.38.67:5000/downloadpicture", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -181,7 +181,7 @@ const AddForm = (props) => {
 
   const getCategories = async()=>{
     const response = await fetch(
-      "/listofcategories"
+      "http://31.128.38.67:5000/listofcategories"
     ).then((response) => response.json());
     setGrowType(response.status.filter(x=>x.categoryType==="growType"));
     setType(response.status.filter(x=>x.categoryType==="seedType"));
@@ -192,7 +192,7 @@ const AddForm = (props) => {
 
 
   const fetchAdd = async (name, price, desc, title, files, content,categoryId) => {
-    const request = await fetch("/addseedallinfo", {
+    const request = await fetch("http://31.128.38.67:5000/addseedallinfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -228,7 +228,7 @@ const AddForm = (props) => {
 
 
   const fetchUpdate = async (name, price, desc, title,files, content, categoryId) => {
-    const request = await fetch("/updateseedallinfo", {
+    const request = await fetch("http://31.128.38.67:5000/updateseedallinfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -261,7 +261,7 @@ const AddForm = (props) => {
   }
   };
 let fetchAddPicture=async(data)=>{
-  let req=await fetch("/addpicture", {
+  let req=await fetch("http://31.128.38.67:5000/addpicture", {
     method: "POST",
     headers: {
       Authorization: "Bearer "+ sessionStorage.getItem("token"),
@@ -343,7 +343,7 @@ let fetchAddPicture=async(data)=>{
   };
 
   let deleteImage = async(id) => {
-    let req= await fetch("/delpicture", {
+    let req= await fetch("http://31.128.38.67:5000/delpicture", {
       method: "POST",
       headers: {
         Accept: "application/json",

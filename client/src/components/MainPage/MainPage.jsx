@@ -12,7 +12,7 @@ import styled from "styled-components";
 import { useAlert } from 'react-alert'
 
 import Pagination  from '@mui/material/Pagination';
-
+//"proxy": "http://31.128.38.67:5000",
 const MainPage = (props) => {
    const alert = useAlert()
     const [search, setSearch] = useState(props.list);
@@ -49,7 +49,7 @@ const MainPage = (props) => {
           name: name,
         }
       }
-      const request = await fetch("/allSeedSort?page="+page, {
+      const request = await fetch("http://31.128.38.67:5000/allSeedSort?page="+page, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -139,10 +139,10 @@ const MainPage = (props) => {
   const [growType, setGrowType] = useState([""]);
   const [type, setType] = useState([""]);
   const [provider, setProvider] = useState([""]);
-
+  //
   const getApiData = async () => {
     const response = await fetch(
-      "/listofcategories"
+      "http://31.128.38.67:5000/listofcategories"
     ).then((response) => response.json());
 
   setGrowType(response.status.filter(x=>x.categoryType==="growType"));

@@ -60,7 +60,7 @@ export default function FilesPage() {
   };
 
   let addFiles = async (data, x) => {
-    let request = await fetch("/addfile", {
+    let request = await fetch("http://31.128.38.67:5000/addfile", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -95,7 +95,7 @@ export default function FilesPage() {
   const [files, setFiles] = useState([]);
 
   const getFiles = async () => {
-    const request = await fetch("/allfiles", {
+    const request = await fetch("http://31.128.38.67:5000/allfiles", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -108,7 +108,7 @@ export default function FilesPage() {
       });
   };
   let deleteFile = (id) => {
-    fetch("/delfile", {
+    fetch("http://31.128.38.67:5000/delfile", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -121,7 +121,7 @@ export default function FilesPage() {
     });
   };
   let downloadFile = async (id) => {
-    let req = await fetch("/downloadcatalog", {
+    let req = await fetch("http://31.128.38.67:5000/downloadcatalog", {
       method: "POST",
       headers: {
         Accept: "application/json",

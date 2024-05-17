@@ -13,7 +13,7 @@ const CardList = (props) => {
   let seeds = props.seeds;
   const alert = useAlert();
   let handleDelete = async (id) => {
-    let req = await fetch("/delseed", {
+    let req = await fetch("http://31.128.38.67:5000/delseed", {
       method: "POST",
       headers: {
         Accept: "application/json",

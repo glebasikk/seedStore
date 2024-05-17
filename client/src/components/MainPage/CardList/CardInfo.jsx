@@ -19,7 +19,7 @@ const CardInfo = (props) => {
   const [image, setImg] = useState([]);
   const product = props.product[0];
   const getPics = async () => {
-    const request = await fetch("/seedpictures", {
+    const request = await fetch("http://31.128.38.67:5000/seedpictures", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -33,7 +33,7 @@ const CardInfo = (props) => {
     content = content.map((x) => x.picture);
     let pictures = [];
     for (let i = 0; i < content.length; i++) {
-      const res = await fetch("/downloadpicture", {
+      const res = await fetch("http://31.128.38.67:5000/downloadpicture", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -66,7 +66,7 @@ const CardInfo = (props) => {
   const [productInfo, setProduct] = useState(defaultVal);
   const [page, setPage] = useState(props.page);
   const fetchProduct = async () => {
-    const request = await fetch("/seedallInfo", {
+    const request = await fetch("http://31.128.38.67:5000/seedallInfo", {
       method: "POST",
       headers: {
         Accept: "application/json",

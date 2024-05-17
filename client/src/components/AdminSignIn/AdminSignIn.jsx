@@ -24,7 +24,7 @@ const theme = createTheme({
 export default function AdminSignIn() {
   const alert = useAlert()
   const auth=async(username,password) => {
-    const request= await fetch('/auth', {
+    const request= await fetch('http://31.128.38.67:5000/auth', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
