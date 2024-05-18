@@ -5,6 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json()
 const picture = require("../controller/picture")
+const sliderPicture = require("../controller/sliderPicture")
 const catalog = require("../controller/catalog")
 const upload = require("../midleware/upload")
 const uploadCatalog = require("../midleware/uploadCatatlog")
@@ -45,6 +46,11 @@ router.post("/downloadcatalog", jsonParser, catalog.downloadCatalog);
 router.get("/allfiles", jsonParser, catalog.allFiles); 
 router.post("/delfile", jsonParser, authMidleware(["admin"]), catalog.delCatalog); // файл по id скачать
 router.post("/addfile", jsonParser, authMidleware(["admin"]),  uploadCatalog.single("file"), catalog.addFile ); // добавить файл "form-data ->  "id","file"
+////////////////////////////////picture
+router.post("/downloadpictureslider", jsonParser, sliderPicture.downloadPicture); 
+router.get("/allpicturiesslider", jsonParser, sliderPicture.allPicturies); 
+router.post("/delpictureslider", jsonParser,  sliderPicture.delPicture); // файл по id скачать
+router.post("/addpictureslider", jsonParser,   upload.single("file"), sliderPicture.addPicture ); // добавить файл "form-data ->  "id","file"
 // router.post("/addcart",jsonParser,authMidleware(["admin","user"]),cart.addCart)
 // router.get("/usercart",jsonParser,authMidleware(["admin","user"]),cart.userCart)
 // router.post("/updatecart",jsonParser,authMidleware(["admin","user"]),cart.updateCart)
