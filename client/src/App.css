@@ -30,6 +30,7 @@ aside, nav, footer, header, section, main {
 h1, h2, h3, h4, h5, h6, p {
     font-size: inherit;
 	font-weight: inherit;
+  margin-bottom: 0;
 }
 
 ul, ul li {
@@ -82,6 +83,7 @@ legend {
 
 body{
   background-color: #EFF0EE;
+  font-family:sans-serif;
 }
 .App {
   text-align: center;
@@ -93,7 +95,7 @@ body{
   align-items: center;
   justify-content: flex-start;
 }
-.container{
+.app-container{
   width: 1220px;
   background-color: white;
 }
@@ -155,8 +157,13 @@ body{
   align-items: center;
   justify-content: center;
 }
+.close-button{
+  cursor:pointer;
+  margin-left:730px;
+  padding:5px;
+}
 @media (max-width: 1220px) { 
-  .container{
+  .app-container{
     width: 100%;
   }
   .flex{
@@ -165,5 +172,11 @@ body{
   }
   .add-pic{
     margin-left: auto;
+  }
+  .close-button{
+    cursor:pointer;
+    margin-left:90%;
+    
+    padding:5px;
   }
  }

@@ -11,7 +11,7 @@ import { ReactComponent as Logo } from "./logo.svg";
 
 const Footer = (props) => {
   return (
-    <div className="footer">
+    <div className="app-footer">
       <Box
         component="footer"
         sx={{
@@ -22,7 +22,7 @@ const Footer = (props) => {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={5}>
+          <Grid app-container spacing={5}>
             <Grid item xs={12} sm={4}>
               <Typography variant="h6" gutterBottom>
                 <div className="logo">

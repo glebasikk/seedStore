@@ -22,7 +22,7 @@ ul li {
 }
 
 .catalog_item1 div > ul {
-  height: 120px;
+  height: 118px;
   overflow-y: scroll;
   margin-bottom: 5px;
 }
@@ -82,7 +82,7 @@ label {
 }
 
 .catalog_item2 div > ul {
-  height: 120px;
+  height: 118px;
   overflow-y: scroll;
   margin-bottom: 5px;
 }
@@ -343,7 +343,7 @@ width:100%;
 }
 span{
   display: flex;
-  align-items:end;
+  align-items:center;
 }
 .label span {
   margin-right: 2px;

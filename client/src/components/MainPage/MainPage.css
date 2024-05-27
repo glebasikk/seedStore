@@ -3,3 +3,19 @@
     justify-content: center;
     margin-top: 30px;
 }
+.slider-image{
+    display:block;
+    width:100%;
+}
+.slider-wrapper{
+    height:500px;
+    width:977px;
+    object-fit: cover;
+}
+@media (max-width: 1220px) {
+    .slider-wrapper{
+        height:300px;
+        width:100%;
+        object-fit: cover;
+    }
+}

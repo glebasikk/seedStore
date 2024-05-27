@@ -24,7 +24,7 @@ const theme = createTheme({
 export default function AdminSignIn() {
   const alert = useAlert()
   const auth=async(username,password) => {
-    const request= await fetch('http://31.128.38.67:5000/auth', {
+    const request= await fetch('/auth', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -57,8 +57,8 @@ export default function AdminSignIn() {
   };
 
   return (
-    <div className="container">
-        <nav className="header" style={{ position: "relative" }}>
+    <div className="app-container">
+        <nav className="app-header" style={{ position: "relative" }}>
         <div className="header-wrapper">
           <div className="admin-header">
           <NavLink to="/">
@@ -111,10 +111,10 @@ export default function AdminSignIn() {
           >
             Войти
           </Button>
-          <Grid container>
+          <Grid app-container>
             <Grid item xs>
               <Link href="/changePassword" variant="body2">
-                Забыли пароль?
+                Изменить пароль
               </Link>
             </Grid>
           </Grid>

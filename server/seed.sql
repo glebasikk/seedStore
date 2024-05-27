@@ -49,6 +49,14 @@ CREATE TABLE catalogs (
     catalog				varchar(255) 	NOT NULL
 );
 
+DROP TABLE IF EXISTS sliderPicturies;
+CREATE TABLE sliderPicturies (
+	id		 			INT 			NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
+    picture				varchar(255) 	NOT NULL
+);
+
+
+
 DROP TABLE IF EXISTS seeds;
 CREATE TABLE seeds (
 	id		 			INT 			    NOT NULL 	AUTO_INCREMENT PRIMARY KEY,
@@ -182,7 +190,6 @@ VALUES
        ( "тепличное","growType"),
        ( "груновое","growType"),
        ( "теплично-груптовое","growType"),
-       
 	   ( "Огурцы детерминантные","seedType"),
        ( "Огурцы индетерминантные","seedType"),
        ( "Томат","seedType"),
@@ -216,9 +223,6 @@ VALUES
        ( "Подвои","seedType"),
        ( "Кукуруза","seedType"),
        ( "Патиссон","seedType"),
-       ("Sad i Ogorod","provider"),
-       ("Usadba","provider"),
-       ("Dobronom","provider"),	
        ("Sakata","provider"),	
 	   ("Greenomica","provider"),
        ("Агрофирма поиск","provider"),

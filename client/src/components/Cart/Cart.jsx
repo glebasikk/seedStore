@@ -18,7 +18,7 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { ReactComponent as Delete } from "./delete.svg";
 import { useAlert } from 'react-alert'
-
+import { Close } from "@mui/icons-material";
 const theme = createTheme({
   palette: {
     primary: {
@@ -70,7 +70,7 @@ const Cart = (props) => {
     let userPhone = document.getElementById("userPhone").value;
     let id=props.cart.map(x=>x.id)
     let amount= props.cart.map(x=>x.amount)
-    let req=await fetch("http://31.128.38.67:5000/mail", {
+    let req=await fetch("/mail", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -118,9 +118,17 @@ const Cart = (props) => {
 }
   return (
     <nav className="cart">
+       <div className="close-button">
+        <Close
+          onClick={function () {
+            props.closeModal();
+          }}
+        />
+      </div>
       <p className="cart-title">
         <b>Корзина</b>
       </p>
+     
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={customStyles}>
           <Table
@@ -138,6 +146,9 @@ const Cart = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
+            <StyledTableRow>
+              <StyledTableCell align="left">Корзина пустая</StyledTableCell>
+            </StyledTableRow>
               {props.cart.map((row) => (
                 <StyledTableRow key={row.name}>
                   <StyledTableCell align="left">{row.name}</StyledTableCell>
@@ -217,7 +228,6 @@ const Cart = (props) => {
                 >
                   <MenuItem key={1} value="Картой">Картой</MenuItem>
                   <MenuItem key={2} value="Наличными">Наличными</MenuItem>
-                  <MenuItem key={3} value="Платеж ЕРИП">Платеж ЕРИП</MenuItem>
                 </Select>
               </FormControl>
               <FormControl sx={{ m: 1, minWidth: 300 }}>
@@ -273,14 +283,6 @@ const Cart = (props) => {
           <ThemeProvider theme={theme}>
             <Button variant="contained" type="submit">
               Заказать
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={function () {
-                props.closeModal();
-              }}
-            >
-              Закрыть
             </Button>
           </ThemeProvider>
         </div>

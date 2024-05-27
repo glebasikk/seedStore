@@ -1,12 +1,14 @@
-
 {
-  "proxy": "http://31.128.38.67:5000",
+  "proxy": "http://localhost:5000",
   "name": "client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@bearer/js": "^1.13.10",
     "@bearer/react": "^1.13.10",
+    "@coreui/coreui": "^5.0.1",
+    "@coreui/coreui-pro": "^5.1.0",
+    "@coreui/react": "^5.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.15",
@@ -26,9 +28,7 @@
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
-    
   },
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -56,5 +56,4 @@
   "devDependencies": {
     "@types/jquery": "^3.5.30"
   }
-  
 }

@@ -79,7 +79,7 @@
 .image-block {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  
   gap: 10px;
 }
 .chars-title {
@@ -122,6 +122,7 @@
 }
 .green {
   color: #16642c;
+  text-align: right;
 }
 .scroll {
   max-height: 225px;
@@ -156,6 +157,11 @@
   align-items: center;
   color: #838383;
   font-size: 18px;
+}
+.slider-wrapper-info{
+  height:225px;
+  width:100%;
+  object-fit: cover;
 }
 @media (max-width: 1220px) { 
  .image-block{

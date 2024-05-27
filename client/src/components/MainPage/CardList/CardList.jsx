@@ -12,25 +12,9 @@ import { useAlert } from "react-alert";
 const CardList = (props) => {
   let seeds = props.seeds;
   const alert = useAlert();
+
   let handleDelete = async (id) => {
-    let req = await fetch("http://31.128.38.67:5000/delseed", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + sessionStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        id: id,
-      }),
-    });
-    let status = await req;
-    if (status.status === 200) {
-      alert.success("Товар удален");
-    } else {
-      alert.error("Ошибка удаления");
-    }
-    //window.location.reload();
+    props.deleteSeed(id)
   };
   let pagesCount = Math.ceil(seeds.count / 10);
 
@@ -89,7 +73,7 @@ const CardList = (props) => {
         position: "relative",
         background: "white",
         width: "870px",
-        height: "590px",
+        height: "auto",
         inset: "auto",
         overflowY: "auto",
         borderRadius: "0.3rem",
@@ -103,8 +87,8 @@ const CardList = (props) => {
         zIndex: 1020,
         top: 0,
         left: 0,
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         background: "rgba(0, 0, 0, 0.75)",
         display: "flex",
         alignItems: "center",

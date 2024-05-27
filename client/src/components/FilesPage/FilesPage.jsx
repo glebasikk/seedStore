@@ -60,7 +60,7 @@ export default function FilesPage() {
   };
 
   let addFiles = async (data, x) => {
-    let request = await fetch("http://31.128.38.67:5000/addfile", {
+    let request = await fetch("/addfile", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -95,7 +95,7 @@ export default function FilesPage() {
   const [files, setFiles] = useState([]);
 
   const getFiles = async () => {
-    const request = await fetch("http://31.128.38.67:5000/allfiles", {
+    const request = await fetch("/allfiles", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -108,7 +108,7 @@ export default function FilesPage() {
       });
   };
   let deleteFile = (id) => {
-    fetch("http://31.128.38.67:5000/delfile", {
+    fetch("/delfile", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -121,7 +121,7 @@ export default function FilesPage() {
     });
   };
   let downloadFile = async (id) => {
-    let req = await fetch("http://31.128.38.67:5000/downloadcatalog", {
+    let req = await fetch("/downloadcatalog", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -142,9 +142,22 @@ export default function FilesPage() {
     getFiles();
   }, [files]);
 
+  let customStyles={}
+  if(window.innerWidth > 1220){
+    customStyles = {
+      width: "100%", 
+      mt: "12",
+    }
+  }else{
+    customStyles = {
+      mt: 2,
+      
+  }
+}
+
   return (
-    <div className="container">
-      <nav className="header" style={{ position: "relative" }}>
+    <div className="app-container">
+      <nav className="app-header" style={{ position: "relative" }}>
         <div className="header-wrapper">
           <div className="admin-header">
             <NavLink to="/">
@@ -208,7 +221,7 @@ export default function FilesPage() {
         <TableContainer>
           <Table
             size="small"
-            sx={{ width: "100%", mt: 12 }}
+            sx={customStyles}
             aria-label="customized table"
           >
             <TableHead>

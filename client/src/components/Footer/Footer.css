@@ -1,4 +1,4 @@
-.footer{
+.app-footer{
     background-color:#16642C;
     width: 1220px;
     margin-top: 50px;
@@ -7,7 +7,7 @@
     align-items: center;
 }
 @media (max-width: 1220px) { 
-    .footer{
+    .app-footer{
         width:100%;
     }
 }

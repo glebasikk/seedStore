@@ -5,7 +5,11 @@ import styled from "styled-components";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import  Carousel from "./Carousel";
+import { Close } from "@mui/icons-material";
+import { CCarousel } from "@coreui/react";
+import { CCarouselItem } from "@coreui/react";
+import { CImage } from "@coreui/react";
+import "@coreui/coreui/dist/css/coreui.min.css";
 
 const theme = createTheme({
   palette: {
@@ -19,7 +23,7 @@ const CardInfo = (props) => {
   const [image, setImg] = useState([]);
   const product = props.product[0];
   const getPics = async () => {
-    const request = await fetch("http://31.128.38.67:5000/seedpictures", {
+    const request = await fetch("/seedpictures", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -33,7 +37,7 @@ const CardInfo = (props) => {
     content = content.map((x) => x.picture);
     let pictures = [];
     for (let i = 0; i < content.length; i++) {
-      const res = await fetch("http://31.128.38.67:5000/downloadpicture", {
+      const res = await fetch("/downloadpicture", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -66,7 +70,7 @@ const CardInfo = (props) => {
   const [productInfo, setProduct] = useState(defaultVal);
   const [page, setPage] = useState(props.page);
   const fetchProduct = async () => {
-    const request = await fetch("http://31.128.38.67:5000/seedallInfo", {
+    const request = await fetch("/seedallInfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -110,10 +114,16 @@ const CardInfo = (props) => {
         content.additionaiInfo.push({ title: x.categoryType, content: x.name });
       });
     }
-    if(content.additionaiInfo!==null ){
-    content.additionaiInfo.filter(x=>x.title==="provider").map(x=>x.title="Производитель")
-    content.additionaiInfo.filter(x=>x.title==="seedType").map(x=>x.title="Вид")
-    content.additionaiInfo.filter(x=>x.title==="growType").map(x=>x.title="Способ выращивания")
+    if (content.additionaiInfo !== null) {
+      content.additionaiInfo
+        .filter((x) => x.title === "provider")
+        .map((x) => (x.title = "Производитель"));
+      content.additionaiInfo
+        .filter((x) => x.title === "seedType")
+        .map((x) => (x.title = "Вид"));
+      content.additionaiInfo
+        .filter((x) => x.title === "growType")
+        .map((x) => (x.title = "Способ выращивания"));
     }
     setProduct(content);
   };
@@ -176,19 +186,33 @@ const CardInfo = (props) => {
       setXPosition(xPosition - width);
     }
   };
-let images=image
+  let images = image;
 
   return (
     <div className="card-info">
+      <div className="close-button">
+        <Close
+          onClick={function () {
+            props.closeModal();
+          }}
+        />
+      </div>
       <div className="image-block">
         <div className="image-block-child">
-          <Carousel
-            images={images}
-            setWidth={setWidth}
-            xPosition={xPosition}
-            handleClickPrev={handleClickPrev}
-            handleClicknext={handleClicknext}
-          />
+        
+          <CCarousel controls indicators>
+            {images.length > 0 &&
+              image.map((x) => (
+                <CCarouselItem>
+                  <CImage
+                    className="d-block w-100 slider-wrapper-info"
+                    src={x}
+                    alt="slide 1"
+                  />
+                </CCarouselItem>
+              ))}
+          </CCarousel>
+          
         </div>
         <div className="image-block-child ">
           <p className="chars-title">
@@ -225,15 +249,15 @@ let images=image
         <div className="child">
           <ThemeProvider theme={theme}>
             <ButtonGroup variant="contained" aria-label="Basic button group">
-              {window.innerWidth > 1220 && 
+              {window.innerWidth > 1220 && (
                 <Button
-                disableRipple="true"
-                sx={{ "&.MuiButtonBase-root:hover": { bgcolor: "#16642C" } }}
-              >
-                Количество
-              </Button>
-              }
-              
+                  disableRipple="true"
+                  sx={{ "&.MuiButtonBase-root:hover": { bgcolor: "#16642C" } }}
+                >
+                  Количество
+                </Button>
+              )}
+
               <Button onClick={decrementAmount}>-</Button>
               <Button
                 disableRipple="true"
@@ -262,19 +286,12 @@ let images=image
                 product.name,
                 amount
               );
-            }}
-            variant="contained"
-            style={{ width: "200px", height: "35px" }}
-          >
-            Добавить в корзину
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={function () {
               props.closeModal();
             }}
+            variant="contained"
+            style={{ width: "120px", height: "60px" }}
           >
-            Закрыть
+            Добавить в корзину
           </Button>
         </ThemeProvider>
       </div>

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import styled from 'styled-components';
-import './App.css';
+
 
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 
-import MainPage from "./components/MainPage/MainPage.jsx";
+
 import AddForm from "./components/AddForm/AddForm.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import AdminSignIn from './components/AdminSignIn/AdminSignIn';
 import ChangePassword from './components/AdminSignIn/ChangePassword';
 import FilesPage from './components/FilesPage/FilesPage';
-
+import MainPage from "./components/MainPage/MainPage.jsx";
+import './App.css';
 
 
 

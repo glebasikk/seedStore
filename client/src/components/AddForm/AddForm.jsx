@@ -14,7 +14,7 @@ import { useAlert } from "react-alert";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const theme = createTheme({
   palette: {
@@ -30,6 +30,8 @@ const AddForm = (props) => {
   let id = parseInt(params.id.slice(1));
 
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [files, setFiles] = useState([]);
+
   let defaultSeed = {
     name: "",
     price: 0,
@@ -42,32 +44,21 @@ const AddForm = (props) => {
   const [seed, setSeed] = useState(defaultSeed);
   const [images, setImages] = useState([]);
 
-
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-
+    let previewFiles = files.map((x) => URL.createObjectURL(x));
+    //files=
+    setSelectedFiles(previewFiles);
     if (files.length > 0) {
-     
       alert.success("Файлы выбраны");
-    } else {
-      alert.error("Не выбран ни один файл");
-    }
-    
-  };
-
-  const handleUpload = () => {
-    /*
-    if (selectedFiles.length > 0) {
       const formData = new FormData();
-      selectedFiles.forEach((file, index) => {
+      files.forEach((file, index) => {
         formData.append(`file`, file);
       });
-      alert.success("Файлы выбраны");
-      setImages(formData);
+      setFiles(formData);
     } else {
       alert.error("Не выбран ни один файл");
     }
-    */
   };
 
   let defaultVal = {
@@ -92,38 +83,42 @@ const AddForm = (props) => {
   const [productInfo, setProduct] = useState(defaultVal);
   const [oldImages, setOldImages] = useState("");
 
-  let newType=productInfo.categories.filter(x=>x.categoryType==="seedType").map(x=>x.id)
-  let newProvider=productInfo.categories.filter(x=>x.categoryType==="provider").map(x=>x.id)
-  let newGrowType=productInfo.categories.filter(x=>x.categoryType==="growType").map(x=>x.id)
-  
-  let seedTypeChange=(event)=>{
-    newType=event.target.value
-  }
-  let seedProviderChange=(event)=>{
-    newProvider=event.target.value
-  }
-  let seedGrowTypeChange=(event)=>{
-    newGrowType=event.target.value
-  }
+  let newType = productInfo.categories
+    .filter((x) => x.categoryType === "seedType")
+    .map((x) => x.id);
+  let newProvider = productInfo.categories
+    .filter((x) => x.categoryType === "provider")
+    .map((x) => x.id);
+  let newGrowType = productInfo.categories
+    .filter((x) => x.categoryType === "growType")
+    .map((x) => x.id);
 
+  let seedTypeChange = (event) => {
+    newType = event.target.value;
+  };
+  let seedProviderChange = (event) => {
+    newProvider = event.target.value;
+  };
+  let seedGrowTypeChange = (event) => {
+    newGrowType = event.target.value;
+  };
 
   const fetchProduct = async () => {
-    const request = await fetch("http://31.128.38.67:5000/seedallInfo", {
+    const request = await fetch("/seedallInfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer "+ sessionStorage.getItem("token"),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
       body: JSON.stringify({
         seedId: id,
       }),
     });
     let content = await request.json();
-   
-    
+
     if (content.categories === null) {
-      content.categories=["","",""]
+      content.categories = ["", "", ""];
     }
     if (content.additionaiInfo === null) {
       content.additionaiInfo = [];
@@ -135,12 +130,11 @@ const AddForm = (props) => {
   };
 
   const getPics = async () => {
-    const request = await fetch("http://31.128.38.67:5000/seedpictures", {
+    const request = await fetch("/seedpictures", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        
       },
       body: JSON.stringify({
         seedId: id,
@@ -151,7 +145,7 @@ const AddForm = (props) => {
     let picNames = content.map((x) => x.picture);
     let pictures = [];
     for (let i = 0; i < content.length; i++) {
-      const res = await fetch("http://31.128.38.67:5000/downloadpicture", {
+      const res = await fetch("/downloadpicture", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -179,25 +173,23 @@ const AddForm = (props) => {
   const [type, setType] = useState([""]);
   const [provider, setProvider] = useState([""]);
 
-  const getCategories = async()=>{
-    const response = await fetch(
-      "http://31.128.38.67:5000/listofcategories"
-    ).then((response) => response.json());
-    setGrowType(response.status.filter(x=>x.categoryType==="growType"));
-    setType(response.status.filter(x=>x.categoryType==="seedType"));
-    setProvider(response.status.filter(x=>x.categoryType==="provider"));
-  }
-  
+  const getCategories = async () => {
+    const response = await fetch("/listofcategories").then((response) =>
+      response.json()
+    );
+    setGrowType(response.status.filter((x) => x.categoryType === "growType"));
+    setType(response.status.filter((x) => x.categoryType === "seedType"));
+    setProvider(response.status.filter((x) => x.categoryType === "provider"));
+  };
 
-
-
-  const fetchAdd = async (name, price, desc, title, files, content,categoryId) => {
-    const request = await fetch("http://31.128.38.67:5000/addseedallinfo", {
+  const [imageError, setImageError] = useState(false);
+  const fetchAdd = async (name, price, desc, title, content, categoryId) => {
+    const request = await fetch("/addseedallinfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer "+ sessionStorage.getItem("token"),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
       body: JSON.stringify({
         name: name,
@@ -215,79 +207,63 @@ const AddForm = (props) => {
         const data = new FormData();
         data.append("seedId", newSeed.id);
         data.append("file", x);
-       fetchAddPicture(data)
+        fetchAddPicture(data);
       });
+      alert.success("Товар успешно добавлен");
     } else {
       alert.error("Ошибка добаления");
     }
   };
 
-
-
-
-
-
-  const fetchUpdate = async (name, price, desc, title,files, content, categoryId) => {
-    const request = await fetch("http://31.128.38.67:5000/updateseedallinfo", {
+  const fetchUpdate = async (name, price, desc, title, content, categoryId) => {
+    const request = await fetch("/updateseedallinfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer "+ sessionStorage.getItem("token"),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
       body: JSON.stringify({
         seedId: id,
         name: name,
         price: price,
-        categoryId:categoryId,
+        categoryId: categoryId,
         info: desc,
         title: title.filter((x) => x !== ""),
         content: content.filter((x) => x !== ""),
       }),
-    }) 
+    });
     let newSeed = await request.json();
     let status = await request;
-    if(status.status===200){
-      
+
+    if (status.status === 200) {
       files.forEach((x) => {
-      const data = new FormData();
-      data.append("seedId", newSeed.id);
-      data.append("file", x);
-      fetchAddPicture(data)
-    });
-    forceUpdate(status);
-  }else{
-    alert.error("Ошибка! Товар не изменен")
-  }
+        const data = new FormData();
+        data.append("seedId", newSeed.id);
+        data.append("file", x);
+        fetchAddPicture(data);
+      });
+      alert.success("Товар успешно изменен");
+      forceUpdate(status);
+    } else {
+      alert.error("Ошибка! Товар не изменен");
+    }
   };
-let fetchAddPicture=async(data)=>{
-  let req=await fetch("http://31.128.38.67:5000/addpicture", {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer "+ sessionStorage.getItem("token"),
-    },
-    body: data,
-  });
-  let status=await req
-  if(status.status===200){
-    if(id>0){
-      alert.success("Товар успешно изменен")
-    }
-    else{
-      alert.success("Товар успешно добвален")
-    }
-  }
-  else{
-    alert.error("Ошибка в загрузке изображений")
-  }
-}
-  let save = async () => {
-    let files = Array.from(document.getElementById("multiple-file-input").files)
-    const formData = new FormData();
-    files.forEach((file, index) => {
-      formData.append(`file`, file);
+  let fetchAddPicture = async (data) => {
+    let req = await fetch("/addpicture", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
+      },
+      body: data,
     });
-    //alert.success("Файлы выбраны");
+    let status = await req;
+    if (status.status !== 200) {
+      alert.error("Ошибка в загрузке изображений");
+    }
+  };
+
+  let save = async () => {
     let name = document.getElementById("name").value;
     let price = document.getElementById("price").value;
     let desc = document.getElementById("desc").value;
@@ -329,26 +305,43 @@ let fetchAddPicture=async(data)=>{
       charVal8,
     ];
 
+    let categoryId = [];
+    categoryId.push(newType);
+    categoryId.push(newGrowType);
+    categoryId.push(newProvider);
 
-    let categoryId=[]
-    categoryId.push(newType)
-    categoryId.push(newGrowType)
-    categoryId.push(newProvider)
-    
     if (id === 0) {
-      fetchAdd(name, price, desc, title,files, content,categoryId.flat(2));
+      fetchAdd(name, price, desc, title, content, categoryId.flat(2));
     } else {
-      fetchUpdate(name, price, desc, title,files, content,categoryId.flat(2));
+      fetchUpdate(name, price, desc, title, content, categoryId.flat(2));
     }
+    setSelectedFiles([]);
+    setFiles([]);
   };
 
-  let deleteImage = async(id) => {
-    let req= await fetch("http://31.128.38.67:5000/delpicture", {
+  let deleteImage = (event) => {
+    event.preventDefault();
+    let ids = [];
+    var checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+    
+    
+    for (var i = 0; i < checkboxes.length; i++) {
+      ids.push(checkboxes[i].value);
+    }
+    ids = ids.map(Number);
+    ids.forEach((x) => {
+      fetchDeleteImage(x);
+      
+    });
+
+  };
+  let fetchDeleteImage = async (id) => {
+    let req = await fetch("/delpicture", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer "+ sessionStorage.getItem("token"),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
       body: JSON.stringify({
         id: id,
@@ -356,59 +349,59 @@ let fetchAddPicture=async(data)=>{
     }).catch((error) => {
       console.log(error);
     });
-    let status=await req
-    if(status.status===200){
-      alert.success("Изображение удалено")
+    let status = await req;
+    if (status.status === 200) {
+      alert.success("Изображение удалено");
       forceUpdate(status);
+    } else {
+      alert.error("Ошибка удаления");
     }
-    else{
-      alert.error("Ошибка удаления")
-    }
+    setOldImages([])
   };
 
- 
   const [update, forceUpdate] = useState("");
+
   useEffect(() => {
     if (id !== 0) {
       fetchProduct();
-      //getPics();
     }
-    getCategories()
+    getCategories();
   }, []);
+
   useEffect(() => {
     if (id !== 0) {
       fetchProduct();
       getPics();
     }
-    //getCategories()
   }, [update]);
+
   return (
     <ThemeProvider theme={theme}>
-    <div className="container">
-      <nav className="header" style={{ position: "relative" }}>
-        <div className="header-wrapper">
-          <div className="admin-header">
-            <NavLink to="/">
-              <div className="logo">
-                <Logo fill="white" width="60px" height="60px" />
-                <p className="title">Title</p>
-              </div>
-            </NavLink>
-            <div className="for-admin">Для администратора</div>
+      <div className="app-container">
+        <nav className="app-header" style={{ position: "relative" }}>
+          <div className="header-wrapper">
+            <div className="admin-header">
+              <NavLink to="/">
+                <div className="logo">
+                  <Logo fill="white" width="60px" height="60px" />
+                  <p className="title">Title</p>
+                </div>
+              </NavLink>
+              <div className="for-admin">Для администратора</div>
+            </div>
           </div>
-        </div>
-      </nav>
-      <div className="admin-pannel">
-        
+        </nav>
+        <div className="admin-pannel">
           <div className="admin-pannel-child">
             <div className="upload-pics">
-              <PhotoCamera sx={{ fontSize: 100, color: "#16642C" }} />
               <Box
                 p={3}
+                m={1}
                 border="1px dashed #ccc"
                 borderRadius={8}
                 textAlign="center"
               >
+                <PhotoCamera sx={{ fontSize: 100, color: "#16642C" }} />
                 <input
                   type="file"
                   accept="image/*"
@@ -429,17 +422,9 @@ let fetchAddPicture=async(data)=>{
                     </Typography>
                     <ul>
                       {selectedFiles.map((file) => (
-                        <li key={file.name}>{file.name}</li>
+                        <img className="del-image" src={file} />
                       ))}
                     </ul>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleUpload}
-                      mt={2}
-                    >
-                      Загрузить
-                    </Button>
                   </div>
                 )}
               </Box>
@@ -448,7 +433,7 @@ let fetchAddPicture=async(data)=>{
                   id="name"
                   label="Название"
                   variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
+                  key={productInfo.name}
                   defaultValue={productInfo.name}
                 />
               </FormControl>
@@ -458,66 +443,90 @@ let fetchAddPicture=async(data)=>{
                   label="Цена"
                   variant="outlined"
                   type="number"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
+                  key={productInfo.price}
                   defaultValue={productInfo.price}
                 />
               </FormControl>
-              <FormControl sx={{ m: 1,width: 300 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">
-                 Производитель
+              <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-simple-select-autowidth-label">
+                  Производитель
                 </InputLabel>
-              <Select
+                <Select
                   multiple
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue = {productInfo.categories.filter(x=>x.categoryType==="provider").map(x=>x.id)}
+                  key={productInfo.categories
+                    .filter((x) => x.categoryType === "provider")
+                    .map((x) => x.id)}
+                  defaultValue={productInfo.categories
+                    .filter((x) => x.categoryType === "provider")
+                    .map((x) => x.id)}
                   labelId="demo-simple-select-autowidth-label"
                   id="provider"
                   label="Производитель"
                   required="required"
                   onChange={seedProviderChange}
                 >
-                  {provider.length>0 && provider.map(x=>(
-                    <MenuItem key={x.id} value={x.id}>{x.name}</MenuItem>
-                  ))}
-                 </Select>
+                  {provider.length > 0 &&
+                    provider.map((x) => (
+                      <MenuItem key={x.id} value={x.id}>
+                        {x.name}
+                      </MenuItem>
+                    ))}
+                </Select>
               </FormControl>
-              <FormControl sx={{ m: 1,width: 300 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">
+              <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-simple-select-autowidth-label">
                   Вид
                 </InputLabel>
-              <Select
-              multiple
-              key={`${Math.floor(Math.random() * 1000)}-min`}
-              defaultValue = {productInfo.categories.filter(x=>x.categoryType==="seedType").map(x=>x.id)}
+                <Select
+                  multiple
+                  key={productInfo.categories
+                    .filter((x) => x.categoryType === "seedType")
+                    .map((x) => x.id)}
+                  defaultValue={productInfo.categories
+                    .filter((x) => x.categoryType === "seedType")
+                    .map((x) => x.id)}
                   onChange={seedTypeChange}
                   labelId="demo-simple-select-autowidth-label"
                   id="type"
                   label="Вид"
                   required="required"
                 >
-                  {type.length>0 && type.map(x=>(
-                    <MenuItem key={`${Math.floor(Math.random() * 1000)}-min`} value={x.id}>{x.name}</MenuItem>
-                  ))}
-                 </Select>
+                  {type.length > 0 &&
+                    type.map((x) => (
+                      <MenuItem
+                        key={`${Math.floor(Math.random() * 1000)}-min`}
+                        value={x.id}
+                      >
+                        {x.name}
+                      </MenuItem>
+                    ))}
+                </Select>
               </FormControl>
-              <FormControl sx={{ m: 1,width: 300 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">
+              <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-simple-select-autowidth-label">
                   Способ выращивания
                 </InputLabel>
-              <Select
-              multiple
-              key={`${Math.floor(Math.random() * 1000)}-min`}
-              defaultValue = {productInfo.categories.filter(x=>x.categoryType==="growType").map(x=>x.id)}
-              onChange={seedGrowTypeChange}
+                <Select
+                  multiple
+                  key={productInfo.categories
+                    .filter((x) => x.categoryType === "growType")
+                    .map((x) => x.id)}
+                  defaultValue={productInfo.categories
+                    .filter((x) => x.categoryType === "growType")
+                    .map((x) => x.id)}
+                  onChange={seedGrowTypeChange}
                   labelId="demo-simple-select-autowidth-label"
                   id="growType"
                   label="СпособВыращивания"
                   required="required"
                 >
-                  {growType.length>0 && growType.map(x=>(
-                    <MenuItem key={x.id} value={x.id}>{x.name}</MenuItem>
-                  ))}
-                 </Select>
+                  {growType.length > 0 &&
+                    growType.map((x) => (
+                      <MenuItem key={x.id} value={x.id}>
+                        {x.name}
+                      </MenuItem>
+                    ))}
+                </Select>
               </FormControl>
               <FormControl sx={{ m: 1, minWidth: 300 }}>
                 <TextField
@@ -525,30 +534,39 @@ let fetchAddPicture=async(data)=>{
                   label="Описание"
                   multiline
                   rows={4}
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
+                  key={productInfo.info}
                   defaultValue={productInfo.info}
                 />
               </FormControl>
             </div>
           </div>
           <div className="admin-pannel-child">
-            <div className="old-images">
-              {oldImages.length > 0 &&
-                oldImages.map((x) => (
-                  <div>
-                    <img src={x[1]} className="del-image" />
-                    
-                    <button
-                   
-                      onClick={function () {
-                        deleteImage(x[0]);
-                      }}
-                    >
-                     <DeleteForeverIcon />
-                    </button>
-                  </div>
-                ))}
-            </div>
+            {oldImages.length > 0 &&
+            <Box
+              p={2}
+              m={1}
+              border="1px dashed #ccc"
+              borderRadius={8}
+              textAlign="center"
+            >
+              
+              <form onSubmit={deleteImage} className="delete-pics-form">
+                <div className="old-images">
+                  {
+                    oldImages.map((x) => (
+                      <div>
+                        <img src={x[1]} className="del-image" />
+                        <input type="checkbox" key={x[0]} value={x[0]} />
+                      </div>
+                    ))}
+                </div>
+                <Button variant="contained" type="submit" sx={{ mt: 2 }}>
+                  Удалить
+                </Button>
+              </form>
+              
+            </Box>
+}
             <p className="chars">
               <b>Характеристики</b>
             </p>
@@ -565,7 +583,7 @@ let fetchAddPicture=async(data)=>{
                     id="charName1"
                     label="Название характеристики"
                     variant="outlined"
-                    key={`${Math.floor(Math.random() * 1000)}-min`}
+                    key={productInfo.additionaiInfo[0].title}
                     defaultValue={productInfo.additionaiInfo[0].title}
                   />
                 </FormControl>
@@ -574,7 +592,7 @@ let fetchAddPicture=async(data)=>{
                     id="charVal1"
                     label="Значение характеристики"
                     variant="outlined"
-                    key={`${Math.floor(Math.random() * 1000)}-min`}
+                    key={productInfo.additionaiInfo[0].content}
                     defaultValue={productInfo.additionaiInfo[0].content}
                   />
                 </FormControl>
@@ -587,26 +605,26 @@ let fetchAddPicture=async(data)=>{
               borderRadius={8}
               textAlign="center"
             >
-            <div className="admin-pannel-inputs">
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charName2"
-                  label="Название характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[1].title}
-                />
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charVal2"
-                  label="Значение характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[1].content}
-                />
-              </FormControl>
-            </div>
+              <div className="admin-pannel-inputs">
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charName2"
+                    label="Название характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[1].title}
+                    defaultValue={productInfo.additionaiInfo[1].title}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charVal2"
+                    label="Значение характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[1].content}
+                    defaultValue={productInfo.additionaiInfo[1].content}
+                  />
+                </FormControl>
+              </div>
             </Box>
             <Box
               p={1}
@@ -615,26 +633,26 @@ let fetchAddPicture=async(data)=>{
               borderRadius={8}
               textAlign="center"
             >
-            <div className="admin-pannel-inputs">
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charName3"
-                  label="Название характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[2].title}
-                />
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charVal3"
-                  label="Значение характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[2].content}
-                />
-              </FormControl>
-            </div>
+              <div className="admin-pannel-inputs">
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charName3"
+                    label="Название характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[2].title}
+                    defaultValue={productInfo.additionaiInfo[2].title}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charVal3"
+                    label="Значение характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[2].title}
+                    defaultValue={productInfo.additionaiInfo[2].title}
+                  />
+                </FormControl>
+              </div>
             </Box>
             <Box
               p={1}
@@ -643,26 +661,26 @@ let fetchAddPicture=async(data)=>{
               borderRadius={8}
               textAlign="center"
             >
-            <div className="admin-pannel-inputs">
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charName4"
-                  label="Название характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[3].title}
-                />
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charVal4"
-                  label="Значение характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[3].content}
-                />
-              </FormControl>
-            </div>
+              <div className="admin-pannel-inputs">
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charName4"
+                    label="Название характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[3].title}
+                    defaultValue={productInfo.additionaiInfo[3].title}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charVal4"
+                    label="Значение характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[3].content}
+                    defaultValue={productInfo.additionaiInfo[3].content}
+                  />
+                </FormControl>
+              </div>
             </Box>
             <Box
               p={1}
@@ -671,26 +689,26 @@ let fetchAddPicture=async(data)=>{
               borderRadius={8}
               textAlign="center"
             >
-            <div className="admin-pannel-inputs">
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charName5"
-                  label="Название характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[4].title}
-                />
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charVal5"
-                  label="Значение характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[4].content}
-                />
-              </FormControl>
-            </div>
+              <div className="admin-pannel-inputs">
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charName5"
+                    label="Название характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[4].title}
+                    defaultValue={productInfo.additionaiInfo[4].title}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charVal5"
+                    label="Значение характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[4].content}
+                    defaultValue={productInfo.additionaiInfo[4].content}
+                  />
+                </FormControl>
+              </div>
             </Box>
             <Box
               p={1}
@@ -699,26 +717,26 @@ let fetchAddPicture=async(data)=>{
               borderRadius={8}
               textAlign="center"
             >
-            <div className="admin-pannel-inputs">
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charName6"
-                  label="Название характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[5].title}
-                />
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charVal6"
-                  label="Значение характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[5].content}
-                />
-              </FormControl>
-            </div>
+              <div className="admin-pannel-inputs">
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charName6"
+                    label="Название характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[5].title}
+                    defaultValue={productInfo.additionaiInfo[5].title}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charVal6"
+                    label="Значение характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[5].content}
+                    defaultValue={productInfo.additionaiInfo[5].content}
+                  />
+                </FormControl>
+              </div>
             </Box>
             <Box
               p={1}
@@ -727,26 +745,26 @@ let fetchAddPicture=async(data)=>{
               borderRadius={8}
               textAlign="center"
             >
-            <div className="admin-pannel-inputs">
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charName7"
-                  label="Название характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[6].title}
-                />
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charVal7"
-                  label="Значение характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[6].content}
-                />
-              </FormControl>
-            </div>
+              <div className="admin-pannel-inputs">
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charName7"
+                    label="Название характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[6].title}
+                    defaultValue={productInfo.additionaiInfo[6].title}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charVal7"
+                    label="Значение характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[6].content}
+                    defaultValue={productInfo.additionaiInfo[6].content}
+                  />
+                </FormControl>
+              </div>
             </Box>
             <Box
               p={1}
@@ -755,36 +773,35 @@ let fetchAddPicture=async(data)=>{
               borderRadius={8}
               textAlign="center"
             >
-            <div className="admin-pannel-inputs">
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charName8"
-                  label="Название характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[7].title}
-                />
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 300 }}>
-                <TextField
-                  id="charVal8"
-                  label="Значение характеристики"
-                  variant="outlined"
-                  key={`${Math.floor(Math.random() * 1000)}-min`}
-                  defaultValue={productInfo.additionaiInfo[7].content || ""}
-                />
-              </FormControl>
-            </div>
+              <div className="admin-pannel-inputs">
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charName8"
+                    label="Название характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[7].title}
+                    defaultValue={productInfo.additionaiInfo[7].title}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 300 }}>
+                  <TextField
+                    id="charVal8"
+                    label="Значение характеристики"
+                    variant="outlined"
+                    key={productInfo.additionaiInfo[7].content}
+                    defaultValue={productInfo.additionaiInfo[7].content}
+                  />
+                </FormControl>
+              </div>
             </Box>
             <Button variant="contained" onClick={save}>
               Cохранить
             </Button>
           </div>
-        
-      </div>
+        </div>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 };

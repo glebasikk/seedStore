@@ -1,4 +1,4 @@
-.header{
+.app-header{
     position: absolute;
     z-index: 100;
     background-color:#16642C;
@@ -47,16 +47,22 @@
     outline:none;
 }
 .cart-icon{
-    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.file-icon{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 75px;
 }
-.cart-icon:hover{
+.file-icon:hover{
     cursor: pointer;
 }
-.cart-icon p{
+.file-icon p{
     color:#ffffff;
     text-decoration: none;
 }
@@ -78,15 +84,47 @@
 .phone-icon-mobile{
     display:none;
 }
+.cart-amount{
+    max-width:20px;
+    max-height: 20px;
+    min-width:20px;
+    min-height: 20px;
+    color:#ffffff;
+    background-color: #a1001b;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fixed-cart{
+    width: 70px;
+    height:70px;
+    -webkit-box-shadow: 1px 1px 34px 7px rgba(0, 0, 0, 0.27);
+    -moz-box-shadow: 1px 1px 34px 7px rgba(0, 0, 0, 0.27);
+    box-shadow: 1px 1px 34px 7px rgba(0, 0, 0, 0.27);
+    border-radius: 80px;
+    background-color: white;
+    position: sticky;
+    bottom: 20px;
+    margin-left: 1120px;
+    
+}
+.fixed-cart-content{
+    height:100%;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media (max-width: 1220px) {
-    .header{
+    .app-header{
         width:100vw;
         height:80px;
         position:relative;
     }
     .search{
         width:200px;
-        margin-left: 20px;
+        margin-left: 11px;
     }
     .title{
         font-size: 24px;
@@ -113,11 +151,36 @@
         display:none;
     }
     .phone-icon-mobile{
-        background-color: #16642C;
+        background-color: #09421c;
         color: #ffffff;
         display: flex;
         justify-content: space-around;
         height:35px;
         padding-top: 8px;
+    }
+    .fixed-cart{
+        width: 70px;
+        height:70px;
+        -webkit-box-shadow: 1px 1px 34px 7px rgba(0, 0, 0, 0.27);
+        -moz-box-shadow: 1px 1px 34px 7px rgba(0, 0, 0, 0.27);
+        box-shadow: 1px 1px 34px 7px rgba(0, 0, 0, 0.27);
+        border-radius: 80px;
+        background-color: white;
+        position: sticky;
+        bottom: 20px;
+        margin-left: 0px;
+        right:0;
+        left:77%;
+        
+    }
+    .file-icon{
+        margin-left: 5px;
+    }
+    .file-icon p{
+        display:none;
+    }
+    .logo{
+        flex-direction: column;
+        margin-top: 11px;
     }
  }
