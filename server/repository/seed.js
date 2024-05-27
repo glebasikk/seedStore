@@ -39,7 +39,7 @@ class Seed {
     async allSeeds(page) {
         return await seed.findAndCountAll({
             offset: page,
-            limit: 10,
+            limit: 12,
         });
     }
 
@@ -67,7 +67,7 @@ class Seed {
                 }
             },
             offset: page,
-            limit: 10,
+            limit: 12,
         });
     }
     async allSeedsByCategory(page,seedId) {
@@ -76,7 +76,7 @@ class Seed {
                 id: seedId
             },
             offset: page,
-            limit: 10,
+            limit: 12,
         });
     }
     async allSeedsByNameAndCategory(page,substring,seedId) {
@@ -88,7 +88,7 @@ class Seed {
                 id: seedId
             },
             offset: page,
-            limit: 10,
+            limit: 12,
         });
     }
 

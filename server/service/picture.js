@@ -47,9 +47,7 @@ class Picture {
     async addPicture(body,file){
         let seedId = body.seedId
         let filename = file.filename
-        console.log(seedId,filename)
         let checkSeed = await seed.seedExist(seedId)
-        console.log(seedId,filename)
         if (checkSeed <= 0){
             fs.unlink(`./uploads/${filename}`, err => {
                 if(err) throw err;

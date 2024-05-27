@@ -4,7 +4,6 @@ const { Op } = require('sequelize')
 
 class Picture {
     async seedPictures(seedId) {
-        console.log(seedId)
         return await picture.findAll({
             
             where: {

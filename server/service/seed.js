@@ -105,7 +105,6 @@ class Seed {
 
                     result.rows[i].dataValues.picture = null
                 }else{
-                    console.log(pictureResult)
                     result.rows[i].dataValues.picture = pictureResult.dataValues.picture
                 }
                 
@@ -212,7 +211,6 @@ class Seed {
         let name = body.name
         let info = body.info
         let price = body.price
-        console.log(name,info,price)
         let result = await seed.addSeed(name,info,price)
         if (result == null) {
             throw new InrenalServerError("No value is created");
@@ -352,8 +350,8 @@ function pageMech (offset){
     if (offset == undefined || offset < 1) {
         offset = 1;
     }
-    let end = 10
-    console.log((offset-1)*end)
+    let end = 12
+ 
     return (offset-1)*end
 }
 
