@@ -13,6 +13,7 @@ class SliderPicture {
     }
     async allPicturies(){
         let result = await sliderPicture.allPicturies()
+        //console.log(result)
         return result
     }
     async delPicture(body){

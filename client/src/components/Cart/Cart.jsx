@@ -70,7 +70,7 @@ const Cart = (props) => {
     let userPhone = document.getElementById("userPhone").value;
     let id=props.cart.map(x=>x.id)
     let amount= props.cart.map(x=>x.amount)
-    let req=await fetch("/mail", {
+    let req=await fetch("http://31.128.38.52:5000/mail", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -146,9 +146,12 @@ const Cart = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-            <StyledTableRow>
-              <StyledTableCell align="left">Корзина пустая</StyledTableCell>
+              {props.cart.length<1 && 
+              <StyledTableRow>
+              <StyledTableCell align="center" colSpan={5}>Корзина пустая</StyledTableCell>
             </StyledTableRow>
+              }
+            
               {props.cart.map((row) => (
                 <StyledTableRow key={row.name}>
                   <StyledTableCell align="left">{row.name}</StyledTableCell>

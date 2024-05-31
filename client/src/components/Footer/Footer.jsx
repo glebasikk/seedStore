@@ -8,6 +8,9 @@ import Grid from "@mui/material/Grid";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { ReactComponent as Logo } from "./logo.svg";
+import { ReactComponent as Whatsapp } from "./whatsapp.svg";
+import { ReactComponent as Gmail } from "./gmail.svg";
+import { ReactComponent as Vk } from "./vk.svg";
 
 const Footer = (props) => {
   return (
@@ -27,50 +30,38 @@ const Footer = (props) => {
               <Typography variant="h6" gutterBottom>
                 <div className="logo">
                   <Logo fill="white" width="50px" height="50px" />
-                  <p>Title</p>
+                  <p>Твои семена</p>
                 </div>
               </Typography>
               <Typography variant="body2">
-                Компание по оптовой продаже семян растений.
+                Компания по оптовой продаже семян растений.
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <Typography variant="h6" gutterBottom>
-                Наши данные
-              </Typography>
-              <Typography variant="body2">г.Москва, ул. Ленина 15</Typography>
-              <Typography variant="body2">Email: info@example.com</Typography>
-              <Typography variant="body2">Phone: +1 234 567 8901</Typography>
-            </Grid>
+
             <Grid item xs={12} sm={4}>
               <Typography variant="h6" gutterBottom>
                 Социальные сети
               </Typography>
-              <Link href="https://www.facebook.com/" color="inherit">
+              <Link href="https://vk.com/club226074497" color="inherit">
+                <Vk fill="white" width="22px" height="22px" />
+              </Link>
+              <Link href="https://www.facebook.com/profile.php?id=61560463943694&mibextid=LQQJ4d" color="inherit">
                 <Facebook />
               </Link>
               <Link
-                href="https://www.instagram.com/"
+                href="https://chat.whatsapp.com/Gm9fWMK4uWZGjNIsOxlmHv"
                 color="inherit"
                 sx={{ pl: 1, pr: 1 }}
               >
-                <Instagram />
+                <Whatsapp fill="white" width="20px" height="20px" />
               </Link>
-              <Link href="https://www.twitter.com/" color="inherit">
-                <Twitter />
+              <Link href="tvoisemenaa@gmail.com" color="inherit">
+                <Gmail fill="white" width="22px" height="22px" />
               </Link>
+              
             </Grid>
           </Grid>
-          <Box mt={5}>
-            <Typography variant="body2" align="center">
-              {"Copyright © "}
-              <Link color="inherit" href="https://your-website.com/">
-                Your Website
-              </Link>{" "}
-              {new Date().getFullYear()}
-              {"."}
-            </Typography>
-          </Box>
+          
         </Container>
       </Box>
     </div>

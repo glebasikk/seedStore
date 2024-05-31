@@ -60,6 +60,7 @@ const App=(props)=> {
   const [images, setImages] = useState("")
   const [img, setImg] = useState("")
   
+  /*
   useEffect(() => {
     const res=fetch('/downloadpicture', {
       method: 'POST',
@@ -74,7 +75,7 @@ const App=(props)=> {
     .catch(error =>{
       console.log(error)
     })
-    /*
+    
     .then(fetch('/downloadpicture', {
       method: 'POST',
       headers: {
@@ -95,9 +96,10 @@ const App=(props)=> {
       console.log(error)
     })
     )
-    */
+    
   }, []);
-
+  */
+ 
 
   return (
     
@@ -107,7 +109,7 @@ const App=(props)=> {
             <Route path="/" element={<MainPage list={props.state.list}/>} />
             <Route path="/add/:id" element={<AddForm />} />
             <Route path="/secret-admin-link" element={<AdminSignIn />} />
-            <Route path="/secret-files-link" element={<FilesPage />} />
+            <Route path="/files" element={<FilesPage />} />
             <Route path="/changePassword" element={<ChangePassword />} />
           </Routes>
           

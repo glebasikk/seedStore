@@ -38,6 +38,7 @@ class Picture {
     async downloadPicture(body){
         
         let img = body.file
+        
         let result = await picture.pictureByName(img)
         if(result !=1){
             throw new NotFound("Picture doesn't exist");
@@ -47,7 +48,9 @@ class Picture {
     async addPicture(body,file){
         let seedId = body.seedId
         let filename = file.filename
+        console.log(seedId,filename)
         let checkSeed = await seed.seedExist(seedId)
+        console.log(seedId,filename)
         if (checkSeed <= 0){
             fs.unlink(`./uploads/${filename}`, err => {
                 if(err) throw err;

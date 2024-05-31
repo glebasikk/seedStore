@@ -23,6 +23,7 @@ class Catalog {
             if (error){
                 return res.status(422).json(new Response("422", error.details));
             }
+            console.log(value)
             let result = await catalog.addFile(value,req.file)
             return res.status(200).json(result);
         }catch (e) {

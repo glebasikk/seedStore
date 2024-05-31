@@ -49,8 +49,8 @@ router.post("/addfile", jsonParser, authMidleware(["admin"]),  uploadCatalog.sin
 ////////////////////////////////picture
 router.post("/downloadpictureslider", jsonParser, sliderPicture.downloadPicture); 
 router.get("/allpicturiesslider", jsonParser, sliderPicture.allPicturies); 
-router.post("/delpictureslider", jsonParser,  sliderPicture.delPicture); // файл по id скачать
-router.post("/addpictureslider", jsonParser,   upload.single("file"), sliderPicture.addPicture ); // добавить файл "form-data ->  "id","file"
+router.post("/delpictureslider", jsonParser,  authMidleware(["admin"]),sliderPicture.delPicture); // файл по id скачать
+router.post("/addpictureslider", jsonParser,  authMidleware(["admin"]), upload.single("file"), sliderPicture.addPicture ); // добавить файл "form-data ->  "id","file"
 // router.post("/addcart",jsonParser,authMidleware(["admin","user"]),cart.addCart)
 // router.get("/usercart",jsonParser,authMidleware(["admin","user"]),cart.userCart)
 // router.post("/updatecart",jsonParser,authMidleware(["admin","user"]),cart.updateCart)
@@ -64,8 +64,8 @@ router.post("/mail",jsonParser,cart.mail)
 //     "amount": [3,2],
 //     "seedId": [1,2]
 // }
-router.post("/addseedallinfo",jsonParser,seed.addSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
-router.post("/updateseedallinfo",jsonParser,seed.updateSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
+router.post("/addseedallinfo",jsonParser,authMidleware(["admin"]),seed.addSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
+router.post("/updateseedallinfo",jsonParser,authMidleware(["admin"]),seed.updateSeedAllInfo); //Создает семена и при необходимости добавляет категории и поля с дополнительной информацией
 
 
 

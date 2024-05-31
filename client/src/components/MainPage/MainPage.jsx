@@ -44,7 +44,7 @@ const MainPage = (props) => {
         name: name,
       };
     }
-    const request = await fetch("/allSeedSort?page=" + page, {
+    const request = await fetch("http://31.128.38.52:5000/allSeedSort?page=" + page, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -134,7 +134,7 @@ const MainPage = (props) => {
   const [provider, setProvider] = useState([""]);
 
   const getApiData = async () => {
-    const response = await fetch("/listofcategories").then((response) =>
+    const response = await fetch("http://31.128.38.52:5000/listofcategories").then((response) =>
       response.json()
     );
 
@@ -146,10 +146,19 @@ const MainPage = (props) => {
     getApiData();
   }, []);
 
-  let [cartItems, setCartItems] = useState([]);
+ 
+  
+  let [cartItems, setCartItems] = useState(()=>{
+    if(JSON.parse(sessionStorage.getItem("cart"))===null){
+      return []
+    }
+    else{
+      return JSON.parse(sessionStorage.getItem("cart"))
+    }
+  });
 
   let addCart = (id, price, name, amount) => {
-    if (cartItems.find((x) => x.name === name)) {
+    if (cartItems.find((x) => x.id === id)) {
       alert.error("Товар уже есть в корзине");
     } else {
       alert.success("Товар добавлен");
@@ -173,7 +182,7 @@ const MainPage = (props) => {
           totalPrice: price * amount,
         },
       ]
-      sessionStorage.setItem("cart", cartObject);
+      
     }
   };
   let deleteCart = (id) => {
@@ -187,12 +196,7 @@ const MainPage = (props) => {
         el.id === id ? { ...el, amount: ++el.amount } : el
       )
     );
-    sessionStorage.setItem(
-      "cart",
-      cartItems.map((el) =>
-        el.id === id ? { ...el, amount: ++el.amount } : el
-      )
-    );
+    
   };
   let decrementAmount = (id, amount) => {
     if (amount !== 1) {
@@ -201,21 +205,20 @@ const MainPage = (props) => {
           el.id === id ? { ...el, amount: --el.amount } : el
         )
       );
-      sessionStorage.setItem(
-        "cart",
-        cartItems.map((el) =>
-          el.id === id ? { ...el, amount: --el.amount } : el
-        )
-      );
+      
     }
   };
   const [update, forceUpdate] = useState("");
   useEffect(() => {
     fetchProducts(page);
   }, [page, name, category, update]);
-
+  useEffect(() => {
+    sessionStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+  
+  
   let deleteSeed = async (id) => {
-    let req = await fetch("/delseed", {
+    let req = await fetch("http://31.128.38.52:5000/delseed", {
       method: "POST",
       headers: {
         Accept: "application/json",

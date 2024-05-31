@@ -24,7 +24,7 @@ const theme = createTheme({
 export default function AdminSignIn() {
   const alert = useAlert()
   const auth=async(username,password) => {
-    const request= await fetch('/auth', {
+    const request= await fetch("http://31.128.38.52:5000/auth", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -64,7 +64,7 @@ export default function AdminSignIn() {
           <NavLink to="/">
             <div className="logo">
               <Logo fill="white" width="60px" height="60px" />
-              <p className="title">Title</p>
+              <p className="title">Твои семена</p>
             </div>
             </NavLink>
             <div className="for-admin">Для администратора</div>

@@ -22,7 +22,7 @@ const Header = (props) => {
       <div className="header-wrapper">
         <div className="logo">
           <Logo fill="white" className="svg-logo" />
-          <p className="title">Title</p>
+          <p className="title">Твои семена</p>
         </div>
         <div>
           <form>
@@ -35,14 +35,14 @@ const Header = (props) => {
           </form>
         </div>
         <div>
-          <NavLink to="secret-files-link" className="file-icon">
+          <NavLink to="files" className="file-icon">
              <FileCopy sx={{ fontSize: 35, color: "white" }} />
             <p>Перечень товаров</p>
           </NavLink>
         </div>
         <div className="phone-icon">
-          <p>+375(29)123-45-67</p>
-          <p>+375(29)123-45-67</p>
+          <p>+7 985 114-10-14</p>
+          <p>+7 965 367-88-33</p>
         </div>
       </div>
     

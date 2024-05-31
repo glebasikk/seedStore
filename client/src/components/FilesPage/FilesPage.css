@@ -1,0 +1,17 @@
+.files-container{
+    padding:30px;
+    padding-top:50px;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+}
+.file-link{
+    color:blue;
+    text-decoration:underline;
+}
+@media (max-width: 1220px) {
+    .files-container{
+        padding:10px;
+        padding-top:20px;
+    }
+}

@@ -22,6 +22,7 @@ import { ReactComponent as Delete } from "./delete.svg";
 import { useAlert } from "react-alert";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import "./FilesPage.css";
 
 const theme = createTheme({
   palette: {
@@ -60,7 +61,7 @@ export default function FilesPage() {
   };
 
   let addFiles = async (data, x) => {
-    let request = await fetch("/addfile", {
+    let request = await fetch("http://31.128.38.52:5000/addfile", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -95,7 +96,7 @@ export default function FilesPage() {
   const [files, setFiles] = useState([]);
 
   const getFiles = async () => {
-    const request = await fetch("/allfiles", {
+    const request = await fetch("http://31.128.38.52:5000/allfiles", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -108,7 +109,7 @@ export default function FilesPage() {
       });
   };
   let deleteFile = (id) => {
-    fetch("/delfile", {
+    fetch("http://31.128.38.52:5000/delfile", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -121,7 +122,7 @@ export default function FilesPage() {
     });
   };
   let downloadFile = async (id) => {
-    let req = await fetch("/downloadcatalog", {
+    let req = await fetch("http://31.128.38.52:5000/downloadcatalog", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -162,8 +163,8 @@ export default function FilesPage() {
           <div className="admin-header">
             <NavLink to="/">
               <div className="logo">
-                <Logo fill="white" width="60px" height="60px" />
-                <p className="title">Title</p>
+                <Logo fill="white" width="60px" height="60px" className="svg-logo"/>
+                <p className="title">Твои семена</p>
               </div>
             </NavLink>
             <div className="for-admin">Список файлов</div>
@@ -217,6 +218,16 @@ export default function FilesPage() {
           </div>
         )}
       </ThemeProvider>
+      <div className="files-container">
+      <Box
+                p={3}
+                m={1}
+                border="1px dashed #16642C"
+                borderRadius={8}
+                textAlign="center"
+              >
+        На этой странице вы можете скачать перечень наших товаров в файловом формате. Чтобы скачать файл, нажмите на его имя в таблице и дождитесь загрузки.
+      </Box>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer>
           <Table
@@ -226,7 +237,7 @@ export default function FilesPage() {
           >
             <TableHead>
               <TableRow>
-                <StyledTableCell align="center">Имя</StyledTableCell>
+                <StyledTableCell align="center">Файлы</StyledTableCell>
                 {isAdmin && (
                   <StyledTableCell align="center">Удалить</StyledTableCell>
                 )}
@@ -236,7 +247,7 @@ export default function FilesPage() {
               {files.map((row) => (
                 <StyledTableRow key={row.name}>
                   <StyledTableCell align="center">
-                    <button
+                    <button className="file-link"
                       onClick={function () {
                         downloadFile(row.id);
                       }}
@@ -261,6 +272,7 @@ export default function FilesPage() {
           </Table>
         </TableContainer>
       </Paper>
+      </div>
       <Footer />
     </div>
   );

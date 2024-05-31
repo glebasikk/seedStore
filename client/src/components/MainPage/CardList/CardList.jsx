@@ -16,7 +16,7 @@ const CardList = (props) => {
   let handleDelete = async (id) => {
     props.deleteSeed(id)
   };
-  let pagesCount = Math.ceil(seeds.count / 10);
+  let pagesCount = Math.ceil(seeds.count / 12);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalId, setId] = useState(null);

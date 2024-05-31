@@ -19,7 +19,7 @@ const theme = createTheme({
 export default function ChangePassword() {
   const alert = useAlert()
   const auth=async(username,password,newPassword) => {
-    const request= await fetch('/changepassword', {
+    const request= await fetch('http://31.128.38.52:5000/changepassword', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -55,7 +55,7 @@ export default function ChangePassword() {
           <NavLink to="/">
             <div className="logo">
               <Logo fill="white" width="60px" height="60px" />
-              <p className="title">Title</p>
+              <p className="title">Твои семена</p>
             </div>
             </NavLink>
             <div className="for-admin">Для администратора</div>

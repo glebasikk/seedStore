@@ -104,7 +104,7 @@ const AddForm = (props) => {
   };
 
   const fetchProduct = async () => {
-    const request = await fetch("/seedallInfo", {
+    const request = await fetch("31.128.38.53:5000/seedallInfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -130,7 +130,7 @@ const AddForm = (props) => {
   };
 
   const getPics = async () => {
-    const request = await fetch("/seedpictures", {
+    const request = await fetch("http://31.128.38.52:5000/seedpictures", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -145,7 +145,7 @@ const AddForm = (props) => {
     let picNames = content.map((x) => x.picture);
     let pictures = [];
     for (let i = 0; i < content.length; i++) {
-      const res = await fetch("/downloadpicture", {
+      const res = await fetch("http://31.128.38.52:5000/downloadpicture", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -174,7 +174,7 @@ const AddForm = (props) => {
   const [provider, setProvider] = useState([""]);
 
   const getCategories = async () => {
-    const response = await fetch("/listofcategories").then((response) =>
+    const response = await fetch("http://31.128.38.52:5000/listofcategories").then((response) =>
       response.json()
     );
     setGrowType(response.status.filter((x) => x.categoryType === "growType"));
@@ -184,7 +184,7 @@ const AddForm = (props) => {
 
   const [imageError, setImageError] = useState(false);
   const fetchAdd = async (name, price, desc, title, content, categoryId) => {
-    const request = await fetch("/addseedallinfo", {
+    const request = await fetch("http://31.128.38.52:5000/addseedallinfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -216,7 +216,7 @@ const AddForm = (props) => {
   };
 
   const fetchUpdate = async (name, price, desc, title, content, categoryId) => {
-    const request = await fetch("/updateseedallinfo", {
+    const request = await fetch("http://31.128.38.52:5000/updateseedallinfo", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -250,7 +250,7 @@ const AddForm = (props) => {
     }
   };
   let fetchAddPicture = async (data) => {
-    let req = await fetch("/addpicture", {
+    let req = await fetch("http://31.128.38.52:5000/addpicture", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -336,7 +336,7 @@ const AddForm = (props) => {
 
   };
   let fetchDeleteImage = async (id) => {
-    let req = await fetch("/delpicture", {
+    let req = await fetch("http://31.128.38.52:5000/delpicture", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -384,7 +384,7 @@ const AddForm = (props) => {
               <NavLink to="/">
                 <div className="logo">
                   <Logo fill="white" width="60px" height="60px" />
-                  <p className="title">Title</p>
+                  <p className="title">Твои семена</p>
                 </div>
               </NavLink>
               <div className="for-admin">Для администратора</div>

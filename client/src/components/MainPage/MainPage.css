@@ -6,11 +6,38 @@
 .slider-image{
     display:block;
     width:100%;
+    height:500px;
 }
 .slider-wrapper{
+    
     height:500px;
     width:977px;
     object-fit: cover;
+}
+.slider-image-wrapper{
+    position:relative;
+}
+.del-slider-pic{
+    position:absolute;
+    top: 75%;
+    left:45%;
+    display: flex;
+    gap:10px;
+}
+.del-slider-pic-child{
+    
+    background-color: rgba(0, 0, 0, 0.76);
+    padding:10px;
+    border-radius: 100%;
+}
+
+.add-slider-pic-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:3px;
+    padding:3px;
 }
 @media (max-width: 1220px) {
     .slider-wrapper{

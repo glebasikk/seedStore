@@ -2,9 +2,9 @@ const Sequelize = require("sequelize");
 
 
 
-const sequelize = new Sequelize("seed", "root", "12345", {
+const sequelize = new Sequelize("seed", "seed", "4%V3taIKSHYJ", {
     dialect: "mysql",
-    host: "localhost",
+    host: "pluslousefouf.beget.app",
     port: "3306",
     define: {
         timestamps: false,

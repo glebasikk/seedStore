@@ -12,7 +12,7 @@ const Card = (props) => {
   const [page,setPage]=useState(props.page)
 
   const getPics=async() => {
-    const request= await fetch('/seedpictures', {
+    const request= await fetch('http://31.128.38.52:5000/seedpictures', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -25,7 +25,7 @@ const Card = (props) => {
     let content = await request.json();
     content=content.map(x=>x.picture)
     
-    const res= await fetch('/downloadpicture', {
+    const res= await fetch('http://31.128.38.52:5000downloadpicture', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
